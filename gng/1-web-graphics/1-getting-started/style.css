@@ -1,0 +1,9 @@
+body {
+  background-color: lightgrey;
+  font-family: sans-serif;
+  font-size: 24px;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
