@@ -1,0 +1,34 @@
+.diagram {
+  width: 100%;
+}
+
+.form {
+  padding: 1em;
+}
+
+.lineInput {
+  width: 40%;
+}
+
+.kbd {
+  /* positioning */
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  top: 50%;
+  left: 50%;
+
+  /* alignment */
+  text-align: center;
+  width: fit-content;
+
+  /* text */
+  background-color: #0003;
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.25em 0.5em;
+  font-size: 2.4rem;
+
+  &:empty {
+    display: none;
+  }
+}
