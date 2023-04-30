@@ -1,5 +1,6 @@
 .angleControl {
-  height: 12em;
+  height: 18rem;
+  vertical-align: middle;
 
   // focus state
   &:active,
@@ -12,22 +13,7 @@
   }
 }
 
-.handle {
-  fill: #665;
-  stroke: #fff;
-  stroke-width: 1;
-
-  &:hover {
-    fill: #554;
-  }
-
-  body[class~="dragging"] & {
-    fill: AccentColor;
-  }
-}
-
 .track {
   fill: none;
-  stroke: #e9e9e9;
-  box-shadow: 1px solid red;
+  stroke: var(--gray12);
 }

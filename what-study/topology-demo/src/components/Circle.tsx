@@ -1,8 +1,11 @@
 import {lerp} from "@liqvid/utils/misc";
+import classNames from "classnames";
 import {useEffect, useRef} from "react";
 
 import {useStore} from "../store";
-import {TWOPI, closestPoint, useDrag} from "../utils";
+import {TWOPI, clampAngle, closestPoint, useDrag} from "../utils";
+
+import styles from "./input.module.scss";
 
 import {ReactComponent as CircleSvg} from "../assets/circle.svg";
 
@@ -89,14 +92,34 @@ export function Circle(props: React.SVGProps<SVGSVGElement>) {
     useStore.setState({circle: (closest / lengthRef.current) * TWOPI});
   });
 
+  // keyboard
+  const step = 0.1;
+  const onKeyDown: React.KeyboardEventHandler = (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      useStore.setState((prev) => ({circle: clampAngle(prev.circle - step)}));
+    } else if (e.key === "ArrowUp" || e.key === "ArrowRight") {
+      e.preventDefault();
+      useStore.setState((prev) => ({circle: clampAngle(prev.circle + step)}));
+    }
+  };
+
   return (
     <>
-      <CircleSvg {...props} ref={circle} />
+      <CircleSvg
+        {...props}
+        ref={circle}
+        tabIndex={0}
+        className={styles.container}
+        onKeyDown={onKeyDown}
+        stroke="var(--plum9)"
+      />
       <circle
-        className="draggable"
+        className={classNames("draggable", styles.handle)}
         r="1"
-        fill="blue"
+        strokeWidth="0.2"
         ref={handleRef}
+        style={{"--shadow": ".4px"} as React.CSSProperties}
         {...events}
       />
     </>

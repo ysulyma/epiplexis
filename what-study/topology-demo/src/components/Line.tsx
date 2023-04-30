@@ -1,9 +1,11 @@
 import {lerp} from "@liqvid/utils/misc";
-import {onDrag} from "@liqvid/utils/react";
-import {useRef, useEffect} from "react";
+import classNames from "classnames";
+import {useEffect, useRef} from "react";
 
 import {useStore} from "../store";
-import {closestPoint} from "../utils";
+import {closestPoint, useDrag} from "../utils";
+
+import styles from "./input.module.scss";
 
 import {ReactComponent as LineSvg} from "../assets/line.svg";
 
@@ -26,7 +28,7 @@ export function Line(props: React.SVGProps<SVGSVGElement>) {
     pathRef.current = line.current?.querySelector("path") ?? null;
   });
 
-  // <- input
+  // sync with input
   useEffect(() => {
     const path = pathRef.current;
     const handle = handleRef.current;
@@ -63,43 +65,59 @@ export function Line(props: React.SVGProps<SVGSVGElement>) {
     return useStore.subscribe((state) => state.line, updatePosition);
   });
 
-  // -> input
-  const events = onDrag(
-    (_, hit) => {
-      const path = pathRef.current!;
-      if (!path) return;
+  // dragging
+  const events = useDrag((_, hit) => {
+    const path = pathRef.current!;
+    if (!path) return;
 
-      const svg = path.ownerSVGElement!.ownerSVGElement!;
+    const svg = path.ownerSVGElement!.ownerSVGElement!;
 
-      const transform = path.getScreenCTM()!.inverse();
-      let target = svg.createSVGPoint();
-      target.x = hit.x;
-      target.y = hit.y;
+    const transform = path.getScreenCTM()!.inverse();
+    let target = svg.createSVGPoint();
+    target.x = hit.x;
+    target.y = hit.y;
 
-      target = target.matrixTransform(transform);
+    target = target.matrixTransform(transform);
 
-      const closest = closestPoint({
-        min: 0,
-        max: lengthRef.current,
-        target,
-        samples,
-        fn: (t) => path.getPointAtLength(t),
-      });
+    const closest = closestPoint({
+      min: 0,
+      max: lengthRef.current,
+      target,
+      samples,
+      fn: (t) => path.getPointAtLength(t),
+    });
 
-      useStore.setState({line: closest / lengthRef.current});
-    },
-    () => document.body.classList.add("dragging"),
-    () => document.body.classList.remove("dragging")
-  );
+    useStore.setState({line: closest / lengthRef.current});
+  });
+
+  // keyboard
+  const step = 0.01;
+  const onKeyDown: React.KeyboardEventHandler = (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      useStore.setState((prev) => ({line: prev.line - step}));
+    } else if (e.key === "ArrowUp" || e.key === "ArrowRight") {
+      e.preventDefault();
+      useStore.setState((prev) => ({line: prev.line + step}));
+    }
+  };
 
   return (
     <>
-      <LineSvg {...props} ref={line} />
+      <LineSvg
+        {...props}
+        ref={line}
+        tabIndex={0}
+        className={styles.container}
+        onKeyDown={onKeyDown}
+        stroke="var(--cyan9)"
+      />
       <circle
-        className="draggable"
+        className={classNames("draggable", styles.handle)}
         r="1"
-        fill="blue"
+        strokeWidth="0.25"
         ref={handleRef}
+        style={{"--shadow": ".5px"} as React.CSSProperties}
         {...events}
       />
     </>

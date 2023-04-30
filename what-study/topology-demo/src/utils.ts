@@ -53,5 +53,8 @@ export function useDrag(move: Parameters<typeof onDrag>[0]) {
   );
 }
 
+/** Clamp angles to [0, TWOPI) */
+export const clampAngle = (t: number) => ((t % TWOPI) + TWOPI) % TWOPI;
+
 export const TWOPI = 2 * Math.PI;
 export const DEGREES = TWOPI / 360;

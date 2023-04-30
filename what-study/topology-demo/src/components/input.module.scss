@@ -1,0 +1,24 @@
+.container:active,
+.container:focus {
+  outline: none;
+
+  path {
+    filter: drop-shadow(0 0 1px AccentColor) drop-shadow(0 0 1px AccentColor);
+  }
+}
+
+.handle {
+  fill: #665;
+  stroke: #fff;
+  filter: drop-shadow(
+    calc(var(--shadow) / 2) calc(var(--shadow) / 2) var(--shadow) #0008
+  );
+
+  &:hover {
+    fill: #554;
+  }
+
+  body[class~="dragging"] svg:is(:active, :hover) & {
+    fill: AccentColor;
+  }
+}
