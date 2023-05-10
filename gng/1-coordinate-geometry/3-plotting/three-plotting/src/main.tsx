@@ -1,4 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
 import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 
