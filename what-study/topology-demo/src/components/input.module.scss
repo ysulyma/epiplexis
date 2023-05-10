@@ -13,6 +13,8 @@
   filter: drop-shadow(
     calc(var(--shadow) / 2) calc(var(--shadow) / 2) var(--shadow) #0008
   );
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
 
   &:hover {
     fill: #554;

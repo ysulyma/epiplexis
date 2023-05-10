@@ -117,7 +117,6 @@ export function Circle(props: React.SVGProps<SVGSVGElement>) {
       <circle
         className={classNames("draggable", styles.handle)}
         r="1"
-        strokeWidth="0.2"
         ref={handleRef}
         style={{"--shadow": ".4px"} as React.CSSProperties}
         {...events}

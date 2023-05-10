@@ -5,6 +5,8 @@ import {useEffect, useRef} from "react";
 import {useStore} from "../store";
 import {closestPoint, useDrag} from "../utils";
 
+import {useScale} from "./scale";
+
 import styles from "./input.module.scss";
 
 import {ReactComponent as LineSvg} from "../assets/line.svg";
@@ -102,6 +104,8 @@ export function Line(props: React.SVGProps<SVGSVGElement>) {
     }
   };
 
+  const scale = useScale();
+
   return (
     <>
       <LineSvg
@@ -114,8 +118,7 @@ export function Line(props: React.SVGProps<SVGSVGElement>) {
       />
       <circle
         className={classNames("draggable", styles.handle)}
-        r="1"
-        strokeWidth="0.25"
+        r={scale * 2}
         ref={handleRef}
         style={{"--shadow": ".5px"} as React.CSSProperties}
         {...events}

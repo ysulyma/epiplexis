@@ -1,9 +1,10 @@
-import {useId} from "react";
+import {useId, useRef} from "react";
 
 import {AngleControl} from "./components/AngleControl";
 import {Circle} from "./components/Circle";
 import {DarkTheme} from "./components/DarkTheme";
 import {Line} from "./components/Line";
+import {ScaleProvider} from "./components/Scale";
 import {useStore} from "./store";
 
 import styles from "./App.module.scss";
@@ -18,6 +19,8 @@ function App() {
 
   const rangeId = useId();
   const circleId = useId();
+
+  const ref = useRef<SVGSVGElement>(null);
 
   return (
     <main className={styles.main}>
@@ -45,9 +48,11 @@ function App() {
         </div>
       </form>
 
-      <svg className={styles.diagram} viewBox="-120 -50 240 100">
-        <Line x="-110" y="-50" width="90" />
-        <Circle x="30" y="-50" width="90" />
+      <svg className={styles.diagram} viewBox="-120 -50 240 100" ref={ref}>
+        <ScaleProvider svg={ref}>
+          <Line x="-110" y="-50" width="90" />
+          <Circle x="30" y="-50" width="90" />
+        </ScaleProvider>
       </svg>
     </main>
   );
