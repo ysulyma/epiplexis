@@ -8,7 +8,7 @@ import {PositionHelper} from "./components/PositionHelper";
 import {SurfaceGraph} from "./components/Surface";
 import {Pt3} from "./utils";
 
-const cameraPosition: Pt3 = [36.18, -17.93, 15.12];
+const cameraPosition: Pt3 = [10.77, -10.98, 9.41];
 const orbitTarget: Pt3 = [0, 0, 0];
 
 const Scene = () => {
