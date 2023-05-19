@@ -1,0 +1,31 @@
+.main {
+  display: flex;
+  height: 100%;
+  max-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+}
+
+.diagram {
+  flex: 1;
+}
+
+.form {
+  padding: 1em;
+  text-align: center;
+  width: 90%;
+}
+
+.lineInput {
+  align-self: center;
+  height: fit-content;
+  width: 50%;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 90%;
+}

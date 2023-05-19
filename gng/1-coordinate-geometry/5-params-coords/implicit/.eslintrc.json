@@ -1,0 +1,79 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "react",
+    "react-refresh",
+    "import",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react-refresh/only-export-components": "warn",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/sort-type-union-intersection-members": "warn",
+    "no-useless-rename": "warn",
+    "object-shorthand": "warn",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "sibling",
+          "index",
+          "unknown"
+        ],
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "*.+(css|scss)",
+            "group": "unknown",
+            "position": "after",
+            "patternOptions": {
+              "matchBase": true
+            }
+          },
+          {
+            "pattern": "*.+(png|svg)",
+            "group": "unknown",
+            "position": "after",
+            "patternOptions": {
+              "matchBase": true
+            }
+          }
+        ],
+        "warnOnUnassignedImports": true
+      }
+    ]
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": "typescript",
+    "react": {
+      "version": "detect"
+    }
+  }
+}
