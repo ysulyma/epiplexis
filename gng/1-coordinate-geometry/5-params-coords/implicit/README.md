@@ -1,4 +1,4 @@
-This demo shows how to plot curves and surfaces in 3d space using [THREE.js](https://threejs.org/) and [React-Three-Fiber](https://docs.pmnd.rs/react-three-fiber).
+This demo includes implementations of the [marching squares](https://en.wikipedia.org/wiki/Marching_squares) and [marching cubes](https://en.wikipedia.org/wiki/Marching_cubes) algorithms for plotting implicit curves and surfaces.
 
 ```console
 npm run dev

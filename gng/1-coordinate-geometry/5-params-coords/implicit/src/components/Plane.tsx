@@ -16,7 +16,7 @@ export function CuttingPlane() {
   }, []);
 
   return (
-    <mesh ref={ref} renderOrder={1}>
+    <mesh ref={ref} renderOrder={1} position={[0, 0, z]}>
       <planeGeometry args={[4, 4]} />
       <meshPhongMaterial
         color={0xffffff}
