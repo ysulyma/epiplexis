@@ -1,5 +1,6 @@
 import {OrbitControls} from "@react-three/drei";
 import {Canvas} from "@react-three/fiber";
+import "katex/dist/katex.min.css";
 import {Suspense, useState} from "react";
 
 import {ControlsContext} from "./components/controls";
@@ -7,6 +8,7 @@ import {Form} from "./components/Form";
 import {ImplicitSurface} from "./components/ImplicitSurface";
 import {CuttingPlane} from "./components/Plane";
 import {PositionHelper} from "./components/PositionHelper";
+import {SyncColorScheme} from "./lib/color-scheme";
 import {Pt3} from "./utils";
 
 const cameraPosition: Pt3 = [3.24, -2.63, 1.71];
@@ -35,6 +37,7 @@ const App = () => {
         width: "100vw",
       }}
     >
+      <SyncColorScheme />
       <Form />
       <Canvas
         camera={{
@@ -44,9 +47,9 @@ const App = () => {
           position: cameraPosition,
           zoom: 1,
         }}
-        onCreated={({gl}) => {
-          gl.setClearColor("#252934");
-        }}
+        // onCreated={({gl}) => {
+        //   gl.setClearColor("var(--gray1)");
+        // }}
       >
         <ControlsContext.Provider value={controls}>
           <PositionHelper />

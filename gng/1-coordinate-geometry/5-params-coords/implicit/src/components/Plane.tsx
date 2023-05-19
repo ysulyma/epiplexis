@@ -1,6 +1,7 @@
 import {useEffect, useRef} from "react";
 import * as THREE from "three";
 
+import {useTheme} from "../lib/color-scheme";
 import {useStore} from "../store";
 
 export function CuttingPlane() {
@@ -15,11 +16,13 @@ export function CuttingPlane() {
     );
   }, []);
 
+  const color = useTheme(0x333333, 0xffffff);
+
   return (
-    <mesh ref={ref} renderOrder={1} position={[0, 0, z]}>
+    <mesh ref={ref} renderOrder={1}>
       <planeGeometry args={[4, 4]} />
       <meshPhongMaterial
-        color={0xffffff}
+        color={color}
         opacity={0.05}
         side={THREE.DoubleSide}
         transparent

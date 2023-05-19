@@ -1,0 +1,14 @@
+.form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+
+  background-color: var(--gray4);
+  padding: 0.5em;
+}
+
+.form input {
+  margin: 0.5em 0;
+}

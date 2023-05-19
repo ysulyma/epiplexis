@@ -1,5 +1,17 @@
+@import "https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/gray.css";
+@import "https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/grayDark.css";
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+:root.dark-theme {
+  background-color: var(--gray1);
+  color: #fff;
 }
