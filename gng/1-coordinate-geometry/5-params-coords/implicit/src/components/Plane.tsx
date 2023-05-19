@@ -19,7 +19,7 @@ export function CuttingPlane() {
   const color = useTheme(0x333333, 0xffffff);
 
   return (
-    <mesh ref={ref} renderOrder={1}>
+    <mesh ref={ref} renderOrder={1} position={[0, 0, z]}>
       <planeGeometry args={[4, 4]} />
       <meshPhongMaterial
         color={color}
