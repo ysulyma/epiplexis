@@ -18,7 +18,7 @@ const max = 100;
  */
 const maxRowsPerTable = 9;
 
-const Th = (props: React.HTMLProps<HTMLTableHeaderCellElement>) => (
+const Th = (props: React.HTMLProps<HTMLTableCellElement>) => (
   <th className="px-4 py-2" {...props} />
 );
 
@@ -26,26 +26,26 @@ const Td = (props: React.HTMLProps<HTMLTableCellElement>) => (
   <td className="px-4 py-2 text-right" {...props} />
 );
 
+// Group the bases into tables with at most `maxRowsPerTable` rows.
+const tables = range(2, 36).reduce((tables, base, index) => {
+  // If the index is a multiple of the maximum number of rows per table,
+  // create a new table.
+  if (index % maxRowsPerTable === 0) {
+    tables.push([]);
+  }
+
+  // Add the current base to the current table.
+  tables[tables.length - 1].push(base);
+
+  return tables;
+}, [] as number[][]);
+
 export default function Table() {
   const [number, setNumber] = useState(42);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(Number(event.target.value));
   };
-
-  // Group the bases into tables with at most `maxRowsPerTable` rows.
-  const tables = range(2, 36).reduce((tables, base, index) => {
-    // If the index is a multiple of the maximum number of rows per table,
-    // create a new table.
-    if (index % maxRowsPerTable === 0) {
-      tables.push([]);
-    }
-
-    // Add the current base to the current table.
-    tables[tables.length - 1].push(base);
-
-    return tables;
-  }, [] as number[][]);
 
   return (
     <main>
@@ -74,7 +74,7 @@ export default function Table() {
         {tables.map((table, index) => (
           <table
             className="border border-gray-200 border-solid dark:border-gray-800"
-            // biome-ignore lint/suspicious/noArrayIndexKey:
+            // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
             key={index}
           >
             <thead className="bg-gray-100 dark:bg-stone-700">

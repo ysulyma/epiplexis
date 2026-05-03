@@ -1,8 +1,24 @@
 {
+  "name": "epiplexis-next",
+  "private": true,
+  "portless": {
+    "name": "content",
+    "script": "dev:next"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "portless",
+    "dev:next": "next dev",
+    "export": "next export",
+    "lint": "next lint",
+    "start": "next start"
+  },
   "dependencies": {
+    "@liqvid/hydration": "file:/Users/yuri/liqvid/packages/hydration",
     "@liqvid/katex": "^0.1.0",
     "@liqvid/mathjax": "^0.1.2",
     "@liqvid/react-three": "^2.0.0",
+    "@liqvid/ssr": "file:/Users/yuri/liqvid/packages/ssr",
     "@liqvid/utils": "^1.8.1",
     "@radix-ui/react-switch": "^1.0.3",
     "@react-three/drei": "^9.96.5",
@@ -32,20 +48,12 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
+    "@biomejs/biome": "2.4.13",
     "@types/katex": "^0.16.7",
     "@types/react-katex": "^3.0.4",
     "@types/three": "^0.160.0",
+    "portless": "^0.12.0",
     "turbo": "1.11.3"
-  },
-  "name": "epiplexis-next",
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "export": "next export",
-    "lint": "next lint",
-    "start": "next start"
   },
   "version": "0.1.0",
   "workspaces": [

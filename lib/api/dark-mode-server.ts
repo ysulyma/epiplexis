@@ -1,17 +1,16 @@
 export const darkClass = "dark";
 
-/** Apply dark background (instead of transparent) when not in an iframe. */
-const orphanBodyClass = "dark:bg-stone-800";
-
 /** Script to inject into app mode */
-export const darkModeScript = `
-  document.documentElement.classList.toggle(
-    "${darkClass}",
-    new URLSearchParams(location.search).has("dark"),
-  );
+export const darkModeScript = `(${() => {
+  const isDark = new URLSearchParams(location.search).has("dark");
 
-  document.body.classList.toggle(
-    "${orphanBodyClass}",
-    parent === window,
-  );
+  // transparency
+  document
+    .getElementById("meta-color-scheme")
+    ?.setAttribute("content", isDark ? "dark" : "light");
+
+  document.documentElement.classList.toggle("dark", isDark);
+
+  document.body.classList.toggle("dark:bg-stone-800", parent === window);
+}})()
 `;

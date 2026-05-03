@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useRef } from "react";
+import { useId, useMemo, useRef } from "react";
 
 export default function Demo() {
   return (
@@ -57,41 +57,36 @@ function useDrag<T = Element>(opts: {
   move: (e: PointerEvent) => unknown;
   up?: (e: PointerEvent) => unknown;
 }) {
-  // pointer event handlers
-  const onPointerUp = useCallback(
-    (e: PointerEvent) => {
+  const onPointerDown = useMemo(() => {
+    // pointer event handlers
+    const onPointerUp = (e: PointerEvent) => {
       opts.up?.(e);
       unsubscribe();
-    },
-    [opts.up, unsubscribe],
-  );
+    };
 
-  const onPointerLeave = useCallback(
-    (e: PointerEvent) => {
+    const onPointerLeave = (e: PointerEvent) => {
       opts.leave?.(e);
       unsubscribe();
-    },
-    [opts.leave, unsubscribe],
-  );
+    };
 
-  /** Remove event handlers from document.body */
-  const unsubscribe = useCallback(() => {
-    document.body.removeEventListener("pointerleave", onPointerLeave);
-    document.body.removeEventListener("pointermove", opts.move);
-    document.body.removeEventListener("pointerup", onPointerUp);
-  }, [opts.move, onPointerLeave, onPointerUp]);
+    /** Remove event handlers from document.body */
+    const unsubscribe = () => {
+      document.body.removeEventListener("pointerleave", onPointerLeave);
+      document.body.removeEventListener("pointermove", opts.move);
+      document.body.removeEventListener("pointerup", onPointerUp);
+    };
 
-  const onPointerDown: React.PointerEventHandler<T> = useCallback(
-    (e) => {
+    const onPointerDown: React.PointerEventHandler<T> = (e) => {
       opts.down?.(e);
 
       // attach event handlers
       document.body.addEventListener("pointerleave", onPointerLeave);
       document.body.addEventListener("pointermove", opts.move);
       document.body.addEventListener("pointerup", onPointerUp);
-    },
-    [opts.move, onPointerUp, onPointerLeave, opts.down],
-  );
+    };
+
+    return onPointerDown;
+  }, [opts.leave, opts.move, opts.up, opts.down]);
 
   return { onPointerDown };
 }

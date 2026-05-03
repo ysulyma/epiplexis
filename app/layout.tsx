@@ -6,20 +6,28 @@ import { darkModeScript } from "@/lib/api/dark-mode-server";
 
 import { Providers } from "./providers";
 
-// apparently necessary for tailwind to generate this class
-("dark:bg-stone-800");
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="dark:text-white" suppressHydrationWarning={true}>
-        <Script id="dark-mode-script" strategy="beforeInteractive">
-          {darkModeScript}
-        </Script>
+    <html lang="en">
+      <body>
+        <meta content="light dark" id="meta-color-scheme" name="color-scheme" />
+        <style
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: ampersand should not be sanitized
+          dangerouslySetInnerHTML={{
+            __html: `:root {
+  color-scheme: light;
+
+  &.dark {
+    color-scheme: dark;
+  }
+}`,
+          }}
+        />
+        <Script id="dark-mode-script">{darkModeScript}</Script>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -13,11 +13,11 @@ const signal = new Signal<ColorScheme>("light");
  */
 function setColorScheme(value: ColorScheme | boolean) {
   if (typeof value === "boolean") {
-    // biome-ignore lint/style/noParameterAssign:
     value = value ? "dark" : "light";
   }
 
   document.documentElement.classList.toggle(darkClass, value === "dark");
+  document.documentElement.style.colorScheme = value;
   signal.set(value);
 }
 
