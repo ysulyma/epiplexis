@@ -34,7 +34,12 @@ export const SurfaceGraph = () => {
   return (
     <mesh>
       <parametricGeometry args={[fn, slices, stacks]} />
-      <meshStandardMaterial color="#1a69b5" side={DoubleSide} />
+      <meshPhysicalMaterial
+        color="#1a69b5"
+        metalness={0.3}
+        roughness={0}
+        side={DoubleSide}
+      />
     </mesh>
   );
 };

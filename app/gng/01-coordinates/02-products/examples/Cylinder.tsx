@@ -29,7 +29,12 @@ export function Cylinder(props: JSX.IntrinsicElements["group"]): JSX.Element {
     <group {...props}>
       <mesh position={[0, 0, h / 2]} rotation={[TURN / 4, 0, 0]}>
         <cylinderGeometry args={[r, r, h, resolution, resolution, true]} />
-        <meshStandardMaterial color="blue" side={DoubleSide} />
+        <meshPhysicalMaterial
+          color="blue"
+          metalness={0.4}
+          roughness={0}
+          side={DoubleSide}
+        />
       </mesh>
       <mesh position={cylindrical({ r, theta, z: z * h })} ref={point}>
         <sphereGeometry args={[pointRadius, resolution, resolution]} />

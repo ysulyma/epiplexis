@@ -29,7 +29,12 @@ export function Torus(props: JSX.IntrinsicElements["group"]): JSX.Element {
     <group {...props}>
       <mesh name="torus">
         <torusGeometry args={[radius, tube, resolution, resolution]} />
-        <meshStandardMaterial color="green" side={DoubleSide} />
+        <meshPhysicalMaterial
+          color="green"
+          metalness={0.3}
+          roughness={0}
+          side={DoubleSide}
+        />
       </mesh>
       <mesh
         name="torus point"

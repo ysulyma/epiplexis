@@ -61,7 +61,7 @@ export function ImplicitSurface() {
   return (
     <>
       <mesh geometry={moduliGeometry}>
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color={0xbb00ff}
           opacity={0.7}
           side={DoubleSide}

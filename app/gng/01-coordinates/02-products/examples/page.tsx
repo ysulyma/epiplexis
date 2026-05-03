@@ -24,6 +24,8 @@ const Scene = () => {
       <ambientLight intensity={Math.PI} />
       <pointLight decay={0} intensity={Math.PI} position={[0, -2, 2]} />
       <pointLight decay={0} intensity={Math.PI} position={[0, 2, 2]} />
+      <pointLight decay={0} intensity={Math.PI} position={[-2, 2, 2]} />
+      <pointLight decay={0} intensity={Math.PI} position={[2, 2, 2]} />
       <pointLight decay={0} intensity={Math.PI} position={[4, -1, 2]} />
       <Cube position={[-3, -0.5, -0.5]} />
       <Cylinder position={[0, 0, -1]} />

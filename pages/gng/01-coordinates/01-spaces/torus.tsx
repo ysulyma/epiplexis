@@ -19,7 +19,12 @@ const orbitTarget: Pt3 = [0, 0, 0];
 const Torus = () => (
   <mesh name="torus">
     <torusGeometry args={[4, 1, 32, 64]} />
-    <meshPhongMaterial color={green600} side={DoubleSide} />
+    <meshPhysicalMaterial
+      color={green600}
+      metalness={0.7}
+      roughness={0.7}
+      side={DoubleSide}
+    />
   </mesh>
 );
 
