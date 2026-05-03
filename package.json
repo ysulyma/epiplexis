@@ -14,11 +14,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@liqvid/hydration": "file:/Users/yuri/liqvid/packages/hydration",
     "@liqvid/katex": "^0.1.0",
     "@liqvid/mathjax": "^0.1.2",
     "@liqvid/react-three": "^2.0.0",
-    "@liqvid/ssr": "file:/Users/yuri/liqvid/packages/ssr",
     "@liqvid/utils": "^1.8.1",
     "@radix-ui/react-switch": "^1.0.3",
     "@react-three/drei": "^9.96.5",
