@@ -1,6 +1,6 @@
 "use client";
 
-import { combineRefs } from "@liqvid/utils/react";
+import { combineRefs } from "@liqvid/utils";
 import { MathJax } from "better-react-mathjax";
 import { Coordinates, Mafs, MovablePoint, Vector, vec } from "mafs";
 import { memo, useMemo, useReducer } from "react";

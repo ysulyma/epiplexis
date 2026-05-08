@@ -1,5 +1,5 @@
 import { useTime } from "@liqvid/playback/react";
-import { animate, bezier, easings } from "@liqvid/utils/animation";
+import { animate, bezier, easings } from "@liqvid/utils";
 import dynamic from "next/dynamic";
 import { Children, cloneElement, useRef } from "react";
 import type { Object3D } from "three";

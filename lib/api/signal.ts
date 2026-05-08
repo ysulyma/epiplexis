@@ -1,4 +1,4 @@
-import { bind } from "@liqvid/utils/misc";
+import { bind } from "@liqvid/utils";
 import { useEffect, useState } from "react";
 
 export class Signal<T> {

@@ -1,5 +1,5 @@
 import { useTime } from "@liqvid/playback/react";
-import { lerp } from "@liqvid/utils/misc";
+import { lerp } from "@liqvid/utils";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import type { Material, Mesh } from "three";
 import { Curve, Plane, TubeGeometry, Vector3 } from "three";

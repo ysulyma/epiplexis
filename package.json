@@ -18,7 +18,7 @@
     "@liqvid/katex": "^0.1.0",
     "@liqvid/mathjax": "^0.1.2",
     "@liqvid/react-three": "^2.0.0",
-    "@liqvid/utils": "^1.10",
+    "@liqvid/utils": "2.0.0-alpha.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@react-three/drei": "^10.7",
     "@react-three/fiber": "^9.6.1",

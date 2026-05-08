@@ -1,4 +1,4 @@
-import { range } from "@liqvid/utils/misc";
+import { range } from "@liqvid/utils";
 import { useEffectEvent } from "react";
 import { shallow } from "zustand/shallow";
 

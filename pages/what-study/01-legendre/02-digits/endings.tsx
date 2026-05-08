@@ -1,4 +1,4 @@
-import { range } from "@liqvid/utils/misc";
+import { range } from "@liqvid/utils";
 
 import { KTX } from "@/components/KTX.tsx";
 

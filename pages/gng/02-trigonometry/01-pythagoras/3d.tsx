@@ -1,4 +1,4 @@
-import { animate, bezier, easings } from "@liqvid/utils/animation";
+import { animate, bezier, easings } from "@liqvid/utils";
 import type * as TLiqvid from "liqvid";
 import { useEffect, useMemo, useState } from "react";
 import { DoubleSide, Quaternion, Vector3 } from "three";

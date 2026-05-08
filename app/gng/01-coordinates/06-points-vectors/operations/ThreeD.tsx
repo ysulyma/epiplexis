@@ -1,6 +1,6 @@
 "use client";
 
-import { combineRefs } from "@liqvid/utils/react";
+import { combineRefs } from "@liqvid/utils";
 import { Canvas } from "@react-three/fiber";
 import { MathJax } from "better-react-mathjax";
 import { memo, useMemo, useReducer } from "react";

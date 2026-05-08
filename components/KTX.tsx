@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useRef } from "react";
 
 import "katex/dist/katex.min.css";
 
-import { combineRefs } from "@liqvid/utils/react";
+import { combineRefs } from "@liqvid/utils";
 
 export const KTX = forwardRef<
   HTMLSpanElement,

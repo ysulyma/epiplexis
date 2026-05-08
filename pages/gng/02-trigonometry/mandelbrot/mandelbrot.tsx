@@ -1,4 +1,4 @@
-import { lerp } from "@liqvid/utils/misc";
+import { lerp } from "@liqvid/utils";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 type Bounds = {

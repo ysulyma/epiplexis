@@ -1,4 +1,4 @@
-import { range } from "@liqvid/utils/misc";
+import { range } from "@liqvid/utils";
 
 import { BaseTable } from "./endings.tsx";
 

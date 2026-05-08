@@ -1,5 +1,4 @@
-import { onDrag } from "@liqvid/utils/react";
-import { screenToSVG } from "@liqvid/utils/svg";
+import { onDrag, screenToSVG } from "@liqvid/utils";
 import { useMemo, useRef } from "react";
 
 import { DEGREES, TURN } from "@/lib/constants.ts";

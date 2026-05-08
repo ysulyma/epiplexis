@@ -1,5 +1,4 @@
-import { onDrag } from "@liqvid/utils/react";
-import { screenToSVG } from "@liqvid/utils/svg";
+import { onDrag, screenToSVG } from "@liqvid/utils";
 import { useRef, useState } from "react";
 
 /** Vector in R^2 */
