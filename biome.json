@@ -34,6 +34,11 @@
       }
     }
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "files": {
     "ignoreUnknown": false,
     "includes": ["**", "!**/.next", "!**/node_modules", "!package.json"]
@@ -82,6 +87,7 @@
       },
       "recommended": true,
       "style": {
+        "noNonNullAssertion": "off",
         "useTemplate": "off"
       }
     }

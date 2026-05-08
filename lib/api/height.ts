@@ -1,21 +1,28 @@
+import { useEffect } from "react";
+
 import type { UpwardMessage } from "./messages";
 
-export function syncHeight() {
-  if (!globalThis.document?.documentElement) return;
+export function useSyncHeight() {
+  useEffect(() => {
+    const onResize = () => {
+      window.parent?.postMessage(
+        {
+          height: document.body.getBoundingClientRect().height,
+          type: "sizing.height",
+        } satisfies UpwardMessage,
+        "*",
+      );
+    };
 
-  const onResize = () => {
-    window.parent?.postMessage(
-      {
-        height: document.body.clientHeight,
-        type: "sizing.height",
-      } satisfies UpwardMessage,
-      "*",
-    );
-  };
+    const observer = new ResizeObserver(() => {
+      onResize();
+    });
 
-  const observer = new ResizeObserver(() => {
-    onResize();
-  });
+    observer.observe(document.body);
 
-  observer.observe(document.body);
+    return () => {
+      observer.unobserve(document.body);
+      observer.disconnect();
+    };
+  }, []);
 }

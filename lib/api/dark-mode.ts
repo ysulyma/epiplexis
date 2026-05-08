@@ -1,3 +1,5 @@
+import { useEventListener } from "usehooks-ts";
+
 import { darkClass } from "./dark-mode-server";
 import type { DownwardMessage } from "./messages";
 import { Signal, useSignalValue } from "./signal";
@@ -27,10 +29,8 @@ export function initializeDarkMode() {
   setColorScheme(new URLSearchParams(location.search).has("dark"));
 }
 
-export function syncDarkMode() {
-  if (!globalThis.document?.documentElement) return;
-
-  window.addEventListener("message", ({ data }: { data: DownwardMessage }) => {
+export function useSyncDarkMode() {
+  useEventListener("message", ({ data }: { data: DownwardMessage }) => {
     if (data.type === "color-scheme") {
       setColorScheme(data.value);
     }

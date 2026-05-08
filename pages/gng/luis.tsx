@@ -2,7 +2,7 @@ import { DragControls, Html, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import {
   forwardRef,
-  useCallback,
+  useEffectEvent,
   useImperativeHandle,
   useLayoutEffect,
   useMemo,
@@ -192,7 +192,7 @@ const ArrowHelper = forwardRef<
   const groupRef = useRef<Group>(null);
 
   /** Update the cone and cylinder */
-  const update = useCallback(
+  const update = useEffectEvent(
     ({ origin, vector }: { origin?: Vector3; vector?: Vector3 }) => {
       if (origin) {
         groupRef.current?.position.copy(origin);
@@ -205,7 +205,6 @@ const ArrowHelper = forwardRef<
         groupRef.current?.lookAt(vector);
       }
     },
-    [],
   );
 
   // expose api

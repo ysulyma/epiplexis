@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 import { Curve, Svg } from "./curve";
 
@@ -24,7 +24,7 @@ export default function Approx() {
    * Update the piecewise-linear approximation of the curve
    * and its arclength
    */
-  const updateApproximation = (segments: number) => {
+  const updateApproximation = useEffectEvent((segments: number) => {
     const path = ref.current;
     if (!path) return;
 
@@ -48,10 +48,10 @@ export default function Approx() {
 
     // update
     setState({ arclength, d, segments });
-  };
+  });
 
   // initial render
-  useEffect(() => updateApproximation(initialSegments), [updateApproximation]);
+  useEffect(() => updateApproximation(initialSegments), []);
 
   /** Change event handler */
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

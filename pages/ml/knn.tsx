@@ -2,6 +2,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useEffectEvent,
   useImperativeHandle,
   useRef,
   useState,
@@ -36,10 +37,11 @@ export default function KNN() {
       <div className="flex items-center gap-2">
         {COLORS.map((color) => (
           <button
-            aria-selected={color === selectedColor}
+            aria-checked={color === selectedColor}
             className="h-6 w-6 border border-solid opacity-30 aria-selected:opacity-100"
             key={color}
             onClick={() => setColor(color)}
+            role="switch"
             style={{ backgroundColor: color }}
             type="button"
           />
@@ -81,31 +83,28 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(function Canvas(
   const points = useRef<ColoredPoint[]>([]);
 
   /** Add a point to the canvas */
-  const addPoint = useCallback(
-    (e: React.PointerEvent<HTMLElement>) => {
-      const drawingCanvas = drawingLayer.current;
-      if (!drawingCanvas) return;
+  const addPoint = useEffectEvent((e: React.PointerEvent<HTMLElement>) => {
+    const drawingCanvas = drawingLayer.current;
+    if (!drawingCanvas) return;
 
-      const ctx = drawingCanvas.getContext("2d");
-      if (!ctx) return;
+    const ctx = drawingCanvas.getContext("2d");
+    if (!ctx) return;
 
-      // convert event coordinates to canvas coordinates
-      const rect = drawingCanvas.getBoundingClientRect();
+    // convert event coordinates to canvas coordinates
+    const rect = drawingCanvas.getBoundingClientRect();
 
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-      points.current.push({ color, x, y });
+    points.current.push({ color, x, y });
 
-      ctx.beginPath();
-      ctx.fillStyle = color;
-      ctx.arc(x, y, config.drawRadius, 0, 2 * Math.PI);
-      ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, config.drawRadius, 0, 2 * Math.PI);
+    ctx.fill();
 
-      redraw();
-    },
-    [color, redraw],
-  );
+    redraw();
+  });
 
   /** Redraw the KNN canvas */
   const redraw = useCallback(() => {
@@ -204,7 +203,7 @@ function findNearestNeighbor<T extends Point>(pt: Point, points: T[]): T {
 }
 
 /** Set the size of a canvas element */
-function useSetCanvasSize(ref: React.RefObject<HTMLCanvasElement>) {
+function useSetCanvasSize(ref: React.RefObject<HTMLCanvasElement | null>) {
   useEffect(() => {
     function update() {
       const canvas = ref.current;

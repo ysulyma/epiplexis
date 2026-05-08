@@ -1,6 +1,6 @@
 import { range } from "@liqvid/utils/misc";
-import { useCallback } from "react";
-import shallow from "zustand/shallow";
+import { useEffectEvent } from "react";
+import { shallow } from "zustand/shallow";
 
 import { CircleControl } from "@/components/CircleControl";
 import { KTX } from "@/components/KTX";
@@ -94,26 +94,22 @@ function CubeTable() {
 function CylinderTable() {
   const { z, theta } = useStore((state) => state.cylinder, shallow);
 
-  const onChangeZ = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      useStore.setState((prev) => ({
-        cylinder: {
-          ...prev.cylinder,
-          z: Number.parseFloat(e.currentTarget.value),
-        },
-      })),
-    [],
+  const onChangeZ = useEffectEvent((e: React.ChangeEvent<HTMLInputElement>) =>
+    useStore.setState((prev) => ({
+      cylinder: {
+        ...prev.cylinder,
+        z: Number.parseFloat(e.currentTarget.value),
+      },
+    })),
   );
 
-  const onChangeTheta = useCallback(
-    (theta: number) =>
-      useStore.setState((prev) => ({
-        cylinder: {
-          ...prev.cylinder,
-          theta,
-        },
-      })),
-    [],
+  const onChangeTheta = useEffectEvent((theta: number) =>
+    useStore.setState((prev) => ({
+      cylinder: {
+        ...prev.cylinder,
+        theta,
+      },
+    })),
   );
 
   return (

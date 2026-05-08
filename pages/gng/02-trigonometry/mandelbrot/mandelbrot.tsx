@@ -1,6 +1,12 @@
 import { lerp } from "@liqvid/utils/misc";
 import type { MutableRefObject } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from "react";
 
 type Bounds = {
   xMin: number;
@@ -24,15 +30,15 @@ export default function Mandelbrot() {
     yMin: -1,
   });
 
-  const resize = () => {
+  const resize = useEffectEvent(() => {
     const canvas = ref.current;
     if (!canvas) return;
     const { height, width } = canvas.getBoundingClientRect();
     canvas.height = height;
-    canvas.width = height;
-  };
+    canvas.width = width;
+  });
 
-  const redraw = useCallback(() => {
+  const redraw = useEffectEvent(() => {
     // get vars
     const canvas = ref.current;
     if (!canvas) return;
@@ -73,14 +79,14 @@ export default function Mandelbrot() {
     }
 
     ctx.putImageData(imageData, 0, 0);
-  }, [bounds.xMax, bounds.xMin, bounds.yMax, bounds.yMin]);
+  });
 
   useEffect(() => {
     resize();
     redraw();
-  }, [redraw, resize]);
+  }, []);
 
-  const timeout = useRef<number | null>(null) as MutableRefObject<number>;
+  const timeout = useRef<number>(null);
   const zoom = (e: React.WheelEvent<HTMLCanvasElement>) => {
     return;
     const canvas = ref.current;

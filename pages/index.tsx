@@ -47,11 +47,11 @@ export default function Page({
         {JSON.stringify(dir, null, 2)}
       </pre> */}
       <h1 className="my-2 text-3xl">Content</h1>
-      <ol aria-label="Interactives" className="font-mono" role="tree">
+      <div aria-label="Interactives" className="font-mono" role="tree">
         {dir.children.map((item) =>
           typeof item === "string" ? null : <Tree dir={item} key={item.name} />,
         )}
-      </ol>
+      </div>
     </main>
   );
 }
@@ -61,7 +61,7 @@ function Tree({ dir }: { dir: Dir }) {
 
   return (
     // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
-    <li aria-expanded={expanded} className="group" role="treeitem">
+    <div aria-expanded={expanded} className="group" role="treeitem">
       <span
         className="cursor-pointer"
         onClick={() => setExpanded((prev) => !prev)}
@@ -91,7 +91,7 @@ function Tree({ dir }: { dir: Dir }) {
           })}
         </ol>
       )}
-    </li>
+    </div>
   );
 }
 

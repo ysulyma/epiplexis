@@ -30,7 +30,7 @@ export interface MathJaxIds<Id extends string> {
   onTypeset: () => void;
 
   /** Ref to attach to an ancestor element */
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLElement | null>;
 
   useSyncPointDown: <Point extends number[]>(
     point: Point,
