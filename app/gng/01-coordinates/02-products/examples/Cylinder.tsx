@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { type JSX, useEffect, useRef } from "react";
 import { DoubleSide, type Mesh } from "three";
 
 import { pointRadius, resolution, TURN } from "@/lib/constants.ts";
@@ -9,7 +9,8 @@ import { useStore } from "./store.ts";
 const r = 0.5;
 const h = 2;
 
-export function Cylinder(props: JSX.IntrinsicElements["group"]): JSX.Element {
+/** @package */
+export function Cylinder(props: JSX.IntrinsicElements["group"]) {
   const point = useRef<Mesh>(null);
 
   useEffect(

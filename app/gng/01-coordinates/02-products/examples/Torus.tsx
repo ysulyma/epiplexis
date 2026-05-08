@@ -9,7 +9,8 @@ import { useStore } from "./store.ts";
 const radius = 2;
 const tube = 0.5;
 
-export function Torus(props: JSX.IntrinsicElements["group"]): JSX.Element {
+/** @package */
+export function Torus(props: React.JSX.IntrinsicElements["group"]) {
   const point = useRef<Mesh>(null);
 
   useEffect(

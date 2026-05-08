@@ -10,7 +10,7 @@ import { useSignalValue } from "@/lib/api/signal.ts";
 import { marchingCubes } from "@/lib/math/marching-cubes.ts";
 import { marchingSquares } from "@/lib/math/marching-squares.ts";
 
-import { zSignal } from "../state.ts";
+import { zSignal } from "./state.ts";
 
 const resolution = 64;
 
@@ -20,6 +20,7 @@ const fn = (x: number, y: number, z: number) =>
   (x ** 2 + y ** 2) ** 2 -
   (9 * z ** 2 - 1) * (1 - z ** 2);
 
+/** @package */
 export function ImplicitSurface() {
   const moduliGeometry = useMemo(
     () => marchingCubes(fn, -2, 2, resolution),

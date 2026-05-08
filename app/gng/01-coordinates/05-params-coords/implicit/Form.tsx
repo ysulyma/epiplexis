@@ -2,11 +2,11 @@ import { KTX } from "@/components/KTX.tsx";
 import { useSignalValue } from "@/lib/api/signal.ts";
 import { truncate } from "@/lib/math.ts";
 
-import { zSignal } from "../state.ts";
+import { zSignal } from "./state.ts";
 
 const { raw } = String;
 
-/** Form for adjusting the plane position */
+/** @package Form for adjusting the plane position */
 export function Form() {
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const z = Number.parseFloat(e.currentTarget.value);

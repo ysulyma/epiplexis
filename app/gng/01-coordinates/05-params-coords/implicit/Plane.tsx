@@ -3,8 +3,9 @@ import { DoubleSide } from "three";
 
 import { useSchemed } from "@/lib/api/dark-mode.ts";
 
-import { zSignal } from "../state.ts";
+import { zSignal } from "./state.ts";
 
+/** @package */
 export function CuttingPlane() {
   const ref = useRef<THREE.Mesh>(null);
   const z = zSignal.get();

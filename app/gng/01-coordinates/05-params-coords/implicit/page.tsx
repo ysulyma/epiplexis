@@ -7,9 +7,9 @@ import { Suspense, useState } from "react";
 import { ControlsContext } from "@/components/three/PositionHelper.tsx";
 import type { Pt3 } from "@/lib/types.ts";
 
-import { Form } from "./components/Form.tsx";
-import { ImplicitSurface } from "./components/ImplicitSurface.tsx";
-import { CuttingPlane } from "./components/Plane.tsx";
+import { Form } from "./Form.tsx";
+import { ImplicitSurface } from "./ImplicitSurface.tsx";
+import { CuttingPlane } from "./Plane.tsx";
 
 const cameraPosition: Pt3 = [3.24, -2.63, 1.71];
 const orbitTarget: Pt3 = [0, 0, 0];

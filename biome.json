@@ -71,6 +71,7 @@
     "enabled": true,
     "rules": {
       "correctness": {
+        "noPrivateImports": "error",
         "useExhaustiveDependencies": "error",
         "useImportExtensions": "error"
       },

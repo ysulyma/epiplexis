@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "esModuleInterop": true,
     "incremental": true,
@@ -12,11 +13,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }, { "name": "no-private-imports" }],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

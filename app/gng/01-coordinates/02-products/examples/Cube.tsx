@@ -7,7 +7,8 @@ import { useStore } from "./store.ts";
 
 const box = new BoxGeometry(1, 1, 1);
 
-export function Cube(props: JSX.IntrinsicElements["group"]): JSX.Element {
+/** @package */
+export function Cube(props: React.JSX.IntrinsicElements["group"]) {
   const point = useRef<Mesh>(null);
 
   useEffect(
