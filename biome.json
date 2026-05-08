@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.14/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -76,6 +76,9 @@
             "functions": ["clsx", "cva", "tw", "classNames"]
           }
         }
+      },
+      "performance": {
+        "noImgElement": "off"
       },
       "recommended": true,
       "style": {

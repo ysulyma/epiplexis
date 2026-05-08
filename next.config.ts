@@ -1,5 +1,7 @@
 // https://www.viget.com/articles/host-build-and-deploy-next-js-projects-on-github-pages/
 
+import type { NextConfig } from "next";
+
 const isGithubActions = process.env.GITHUB_ACTIONS || false;
 let assetPrefix = "";
 let basePath = "";
@@ -12,13 +14,9 @@ if (isGithubActions) {
   basePath = `/${repo}`;
 }
 
-/** @type {import('next').NextConfig} */
-let nextConfig = {
+let nextConfig: NextConfig = {
   assetPrefix,
   basePath,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   experimental: {
     optimizePackageImports: [
       "@react-three/drei",
@@ -33,14 +31,6 @@ let nextConfig = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-  },
-  webpack(config) {
-    // enable live reload when editing files in node_modules (for debugging purposes)
-    config.snapshot = {
-      ...(config.snapshot ?? {}),
-      managedPaths: [/^(.+?[\\/]node_modules[\\/])(?!@liqvid)/],
-    };
-    return config;
   },
 };
 

@@ -14,16 +14,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@liqvid/event-emitter": "1.0.0-alpha.0",
     "@liqvid/katex": "^0.1.0",
     "@liqvid/mathjax": "^0.1.2",
     "@liqvid/react-three": "^2.0.0",
-    "@liqvid/utils": "^1.8.1",
+    "@liqvid/utils": "^1.10",
     "@radix-ui/react-switch": "^1.0.3",
-    "@react-three/drei": "^9.96.5",
-    "@react-three/fiber": "^8.15.15",
-    "@types/node": "20.11.8",
-    "@types/react": "18.2.48",
-    "@types/react-dom": "18.2.18",
+    "@react-three/drei": "^10.7",
+    "@react-three/fiber": "^9.6.1",
     "autoprefixer": "10.4.17",
     "better-react-mathjax": "^2.0.3",
     "class-variance-authority": "^0.7.0",
@@ -31,23 +29,26 @@
     "clsx": "^2.1.0",
     "dotenv": "^16.4.5",
     "liqvid": "^2.1.19",
-    "lucide-react": "^0.323.0",
     "mafs": "^0.18.8",
-    "next": "14.1.0",
+    "next": "^16.2.6",
     "postcss": "8.4.33",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^19.2",
+    "react-dom": "^19.2",
     "react-katex": "^3.0.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.160.1",
     "ts-extras": "^0.12.0",
-    "typescript": "5.3.3"
+    "typescript": "^6",
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.13",
+    "@biomejs/biome": "2.4.14",
     "@types/katex": "^0.16.7",
+    "@types/node": "^24",
+    "@types/react": "^19.2",
+    "@types/react-dom": "^19.2",
     "@types/react-katex": "^3.0.4",
     "@types/three": "^0.160.0",
     "portless": "^0.12.0",
@@ -56,5 +57,10 @@
   "version": "0.1.0",
   "workspaces": [
     "."
-  ]
+  ],
+  "overrides": {
+    "@react-three/fiber": "$@react-three/fiber",
+    "react": "$react",
+    "react-dom": "$react-dom"
+  }
 }
