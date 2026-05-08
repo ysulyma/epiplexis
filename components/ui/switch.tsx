@@ -6,7 +6,7 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utils.ts";
 
 const Switch = forwardRef<
-  React.ElementRef<typeof SwitchPrimitives.Root>,
+  React.ComponentRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
@@ -27,9 +27,3 @@ const Switch = forwardRef<
 Switch.displayName = SwitchPrimitives.Root.displayName;
 
 export { Switch };
-
-/*
- * Unshackled info session
- * $150k for 10% ownership
- * (reduces to 1-3% by time of IPO)
- */
