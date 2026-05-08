@@ -5,9 +5,9 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { KTX } from "@/components/KTX";
-import { DEGREES, TURN } from "@/lib/constants";
-import { mod } from "@/lib/math";
+import { KTX } from "@/components/KTX.tsx";
+import { DEGREES, TURN } from "@/lib/constants.ts";
+import { mod } from "@/lib/math.ts";
 
 const { cos, sin, tan, sqrt, atan2 } = Math;
 
@@ -55,7 +55,7 @@ const KtxLabel = ({
     >
       {/* fixed is only necessary for Safari */}
       <KTX
-        className="-translate-x-1/2 -translate-y-1/2 fixed block w-min"
+        className="fixed block w-min -translate-x-1/2 -translate-y-1/2"
         ref={ref}
       >
         {children}

@@ -5,7 +5,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useState } from "react";
 
-import { ExternalLink } from "@/components/ExternalLink";
+import { ExternalLink } from "@/components/ExternalLink.tsx";
 
 type Dir = {
   name: string;

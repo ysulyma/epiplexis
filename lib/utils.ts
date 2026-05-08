@@ -10,7 +10,7 @@ import {
 import type { ClassNameValue } from "tailwind-merge";
 import { twMerge } from "tailwind-merge";
 
-import type { Unsubscribe } from "./types";
+import type { Unsubscribe } from "./types.ts";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

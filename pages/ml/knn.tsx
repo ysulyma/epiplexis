@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-import { TURN } from "@/lib/constants";
+import { TURN } from "@/lib/constants.ts";
 
 const COLORS = ["red", "green", "blue"] as const;
 type Color = (typeof COLORS)[number];

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Curve, CurvePath, LineCurve3, Vector3 } from "three";
 
-import { Canvas } from "@/components/liqvid";
-import { OrbitControls } from "@/components/three/OrbitControls";
-import { red500 } from "@/components/three/theme";
+import { Canvas } from "@/components/liqvid.tsx";
+import { OrbitControls } from "@/components/three/OrbitControls.tsx";
+import { red500 } from "@/components/three/theme.ts";
 
 interface State {
   segments: number;

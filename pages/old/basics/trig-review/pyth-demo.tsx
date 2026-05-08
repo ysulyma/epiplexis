@@ -2,7 +2,7 @@ const { raw } = String;
 
 import { useEffect, useRef } from "react";
 
-import { KTX } from "@/components/KTX";
+import { KTX } from "@/components/KTX.tsx";
 
 export default function PythagorasDemo() {
   const ref = useRef<HTMLElement>(null);

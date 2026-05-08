@@ -2,9 +2,9 @@ import "../pages/global.css";
 
 import Script from "next/script";
 
-import { darkModeScript } from "@/lib/api/dark-mode-server";
+import { darkModeScript } from "@/lib/api/dark-mode-server.ts";
 
-import { Providers } from "./providers";
+import { Providers } from "./providers.tsx";
 
 export default function RootLayout({
   children,

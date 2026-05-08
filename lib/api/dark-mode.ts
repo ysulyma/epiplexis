@@ -1,8 +1,8 @@
 import { useEventListener } from "usehooks-ts";
 
-import { darkClass } from "./dark-mode-server";
-import type { DownwardMessage } from "./messages";
-import { Signal, useSignalValue } from "./signal";
+import { darkClass } from "./dark-mode-server.ts";
+import type { DownwardMessage } from "./messages.ts";
+import { Signal, useSignalValue } from "./signal.ts";
 
 type ColorScheme = "light" | "dark";
 

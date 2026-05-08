@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { forwardRef, useEffect, useRef } from "react";
 
-import { fadeIn } from "@/lib/animation/css";
+import { fadeIn } from "@/lib/animation/css.ts";
 
 // @todo make Liqvid support Next
 export const Player = dynamic(

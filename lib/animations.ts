@@ -1,1 +1,1 @@
-export * from "./animation/three";
+export * from "./animation/three.ts";

@@ -1,8 +1,8 @@
-import { KTX } from "@/components/KTX";
-import { useSignalValue } from "@/lib/api/signal";
-import { truncate } from "@/lib/math";
+import { KTX } from "@/components/KTX.tsx";
+import { useSignalValue } from "@/lib/api/signal.ts";
+import { truncate } from "@/lib/math.ts";
 
-import { zSignal } from "../state";
+import { zSignal } from "../state.ts";
 
 const { raw } = String;
 

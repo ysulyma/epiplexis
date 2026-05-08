@@ -11,13 +11,18 @@ import {
 } from "react";
 import { DoubleSide, type Group, type Mesh, Vector3 } from "three";
 
-import { KTX } from "@/components/KTX";
+import { KTX } from "@/components/KTX.tsx";
 import {
   ControlsContext,
   PositionHelper,
   useControls,
-} from "@/components/three/PositionHelper";
-import { blue600, green600, red600, violet400 } from "@/components/three/theme";
+} from "@/components/three/PositionHelper.tsx";
+import {
+  blue600,
+  green600,
+  red600,
+  violet400,
+} from "@/components/three/theme.ts";
 
 const { raw } = String;
 

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { DoubleSide, type Mesh } from "three";
 
-import { pointRadius, resolution, TURN } from "@/lib/constants";
-import { cylindrical } from "@/lib/parametrizations";
+import { pointRadius, resolution, TURN } from "@/lib/constants.ts";
+import { cylindrical } from "@/lib/parametrizations.ts";
 
-import { useStore } from "./store";
+import { useStore } from "./store.ts";
 
 const r = 0.5;
 const h = 2;

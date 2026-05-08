@@ -2,7 +2,7 @@ import { onDrag } from "@liqvid/utils/react";
 import { screenToSVG } from "@liqvid/utils/svg";
 import { useMemo, useRef } from "react";
 
-import { DEGREES, TURN } from "@/lib/constants";
+import { DEGREES, TURN } from "@/lib/constants.ts";
 
 export function CircleControl({
   onChange,

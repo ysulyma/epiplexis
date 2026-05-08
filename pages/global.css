@@ -16,12 +16,10 @@ input {
 /* dragging */
 .draggable {
   cursor: grab;
-  cursor: -webkit-grab;
 }
 
 body.dragging .lv-canvas,
 body.dragging .draggable,
 .dragging {
   cursor: grabbing;
-  cursor: -webkit-grabbing;
 }

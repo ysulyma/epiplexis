@@ -3,7 +3,7 @@ import type * as TLiqvid from "liqvid";
 import { useEffect, useMemo, useState } from "react";
 import { DoubleSide, Quaternion, Vector3 } from "three";
 
-import { FadeIn } from "@/components/animations/html";
+import { FadeIn } from "@/components/animations/html.tsx";
 import {
   Canvas,
   Html,
@@ -11,13 +11,18 @@ import {
   KTX,
   LoadKaTeX,
   Player,
-} from "@/components/liqvid";
-import { FadeIn3, FadeInOut3 } from "@/components/three/animations";
-import { OrbitControls } from "@/components/three/OrbitControls";
-import { Point } from "@/components/three/Point";
-import { Segment } from "@/components/three/Segment";
-import { blue600, green500, pink600, red600 } from "@/components/three/theme";
-import type { Pt3 } from "@/lib/types";
+} from "@/components/liqvid.tsx";
+import { FadeIn3, FadeInOut3 } from "@/components/three/animations.tsx";
+import { OrbitControls } from "@/components/three/OrbitControls.tsx";
+import { Point } from "@/components/three/Point.tsx";
+import { Segment } from "@/components/three/Segment.tsx";
+import {
+  blue600,
+  green500,
+  pink600,
+  red600,
+} from "@/components/three/theme.ts";
+import type { Pt3 } from "@/lib/types.ts";
 
 import "katex/dist/katex.min.css";
 import "liqvid/dist/liqvid.min.css";
@@ -45,10 +50,7 @@ q.setFromUnitVectors(new Vector3(0, 1, 0), new Vector3(0, 0, 1)).premultiply(
 
 const q2 = new Quaternion().setFromUnitVectors(
   new Vector3(-1, 0, 0),
-  vac
-    .clone()
-    .setZ(0)
-    .normalize(),
+  vac.clone().setZ(0).normalize(),
   // )
 );
 

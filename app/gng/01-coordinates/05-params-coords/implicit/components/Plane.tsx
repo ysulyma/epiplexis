@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { DoubleSide } from "three";
 
-import { useSchemed } from "@/lib/api/dark-mode";
+import { useSchemed } from "@/lib/api/dark-mode.ts";
 
-import { zSignal } from "../state";
+import { zSignal } from "../state.ts";
 
 export function CuttingPlane() {
   const ref = useRef<THREE.Mesh>(null);

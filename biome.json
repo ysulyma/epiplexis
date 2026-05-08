@@ -71,7 +71,8 @@
     "enabled": true,
     "rules": {
       "correctness": {
-        "useExhaustiveDependencies": "error"
+        "useExhaustiveDependencies": "error",
+        "useImportExtensions": "error"
       },
       "nursery": {
         "useSortedClasses": {

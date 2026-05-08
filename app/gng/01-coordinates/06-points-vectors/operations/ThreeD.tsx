@@ -6,13 +6,13 @@ import { MathJax } from "better-react-mathjax";
 import { memo, useMemo, useReducer } from "react";
 import { Vector3 } from "three";
 
-import { OrbitControls } from "@/components/three/OrbitControls";
-import { Point } from "@/components/three/Point";
-import { useMathJaxElements, useMathJaxInputs } from "@/lib/hooks/mathjax";
-import type { Pt3 } from "@/lib/types";
-import { makeContext } from "@/lib/utils";
+import { OrbitControls } from "@/components/three/OrbitControls.tsx";
+import { Point } from "@/components/three/Point.tsx";
+import { useMathJaxElements, useMathJaxInputs } from "@/lib/hooks/mathjax.ts";
+import type { Pt3 } from "@/lib/types.ts";
+import { makeContext } from "@/lib/utils.ts";
 
-import { format, leftColor, resultColor, rightColor } from "./shared";
+import { format, leftColor, resultColor, rightColor } from "./shared.tsx";
 
 /** MathJax helper */
 const $$ = memo(function $$({

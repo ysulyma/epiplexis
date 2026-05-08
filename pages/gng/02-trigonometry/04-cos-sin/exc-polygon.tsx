@@ -1,9 +1,9 @@
 import { useMemo, useRef, useState } from "react";
 
-import { KTX } from "@/components/KTX";
-import { TURN } from "@/lib/constants";
-import { truncate } from "@/lib/math";
-import { brand } from "@/lib/utils";
+import { KTX } from "@/components/KTX.tsx";
+import { TURN } from "@/lib/constants.ts";
+import { truncate } from "@/lib/math.ts";
+import { brand } from "@/lib/utils.ts";
 
 const { cos, sin, tan, sqrt, atan2 } = Math;
 

@@ -2,13 +2,13 @@ import { range } from "@liqvid/utils/misc";
 import { useEffectEvent } from "react";
 import { shallow } from "zustand/shallow";
 
-import { CircleControl } from "@/components/CircleControl";
-import { KTX } from "@/components/KTX";
-import { DEGREES, step } from "@/lib/constants";
-import { truncate } from "@/lib/math";
-import type { Pt3 } from "@/lib/types";
+import { CircleControl } from "@/components/CircleControl.tsx";
+import { KTX } from "@/components/KTX.tsx";
+import { DEGREES, step } from "@/lib/constants.ts";
+import { truncate } from "@/lib/math.ts";
+import type { Pt3 } from "@/lib/types.ts";
 
-import { useStore } from "./store";
+import { useStore } from "./store.ts";
 
 const min = 0;
 const max = 1;

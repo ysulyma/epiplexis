@@ -7,13 +7,13 @@ import { Suspense, useState } from "react";
 import {
   ControlsContext,
   PositionHelper,
-} from "@/components/three/PositionHelper";
-import type { Pt3 } from "@/lib/types";
+} from "@/components/three/PositionHelper.tsx";
+import type { Pt3 } from "@/lib/types.ts";
 
-import { Controls } from "./Controls";
-import { Cube } from "./Cube";
-import { Cylinder } from "./Cylinder";
-import { Torus } from "./Torus";
+import { Controls } from "./Controls.tsx";
+import { Cube } from "./Cube.tsx";
+import { Cylinder } from "./Cylinder.tsx";
+import { Torus } from "./Torus.tsx";
 
 const cameraPosition: Pt3 = [2.31, -5.86, 2.11];
 const orbitTarget: Pt3 = [2.3, -0.29, -1.81];

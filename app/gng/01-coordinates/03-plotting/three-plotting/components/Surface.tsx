@@ -3,8 +3,8 @@ import { extend } from "@react-three/fiber";
 import { DoubleSide } from "three";
 import { ParametricGeometry } from "three-stdlib";
 
-import { TURN } from "@/lib/constants";
-import { lerp } from "@/lib/math";
+import { TURN } from "@/lib/constants.ts";
+import { lerp } from "@/lib/math.ts";
 
 extend({ ParametricGeometry });
 

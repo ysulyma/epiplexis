@@ -6,11 +6,11 @@ import {
   LineSegmentsGeometry,
 } from "three-stdlib";
 
-import { useSignalValue } from "@/lib/api/signal";
-import { marchingCubes } from "@/lib/math/marching-cubes";
-import { marchingSquares } from "@/lib/math/marching-squares";
+import { useSignalValue } from "@/lib/api/signal.ts";
+import { marchingCubes } from "@/lib/math/marching-cubes.ts";
+import { marchingSquares } from "@/lib/math/marching-squares.ts";
 
-import { zSignal } from "../state";
+import { zSignal } from "../state.ts";
 
 const resolution = 64;
 

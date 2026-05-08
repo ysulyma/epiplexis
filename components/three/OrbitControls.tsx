@@ -2,7 +2,7 @@ import { OrbitControls as DreiOrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
-import type { Pt3 } from "@/lib/types";
+import type { Pt3 } from "@/lib/types.ts";
 
 export function OrbitControls(props: { target?: Pt3 }) {
   const $three = useThree();

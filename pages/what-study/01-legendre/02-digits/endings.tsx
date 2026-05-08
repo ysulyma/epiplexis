@@ -1,6 +1,6 @@
 import { range } from "@liqvid/utils/misc";
 
-import { KTX } from "@/components/KTX";
+import { KTX } from "@/components/KTX.tsx";
 
 const Th = (props: React.HTMLProps<HTMLTableCellElement>) => (
   <th

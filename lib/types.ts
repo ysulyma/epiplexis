@@ -7,8 +7,7 @@ export type GuaranteedMap<K, V> = Omit<Map<K, V>, "get"> & {
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: variance
-export type MapValue<M extends Map<any, any>> = M extends Map<any, infer V>
-  ? V
-  : never;
+export type MapValue<M extends Map<any, any>> =
+  M extends Map<any, infer V> ? V : never;
 
 export type Unsubscribe = () => void;

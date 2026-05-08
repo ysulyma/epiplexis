@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { BoxGeometry, type Mesh } from "three";
 
-import { pointRadius, resolution } from "@/lib/constants";
+import { pointRadius, resolution } from "@/lib/constants.ts";
 
-import { useStore } from "./store";
+import { useStore } from "./store.ts";
 
 const box = new BoxGeometry(1, 1, 1);
 

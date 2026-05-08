@@ -3,13 +3,13 @@ import { Canvas, extend } from "@react-three/fiber";
 import { Suspense, useState } from "react";
 import { DoubleSide } from "three";
 
-import { ParametricGeometry } from "@/components/three/ParametricGeometry";
+import { ParametricGeometry } from "@/components/three/ParametricGeometry.tsx";
 import {
   ControlsContext,
   PositionHelper,
-} from "@/components/three/PositionHelper";
-import { blue600, green600, red600 } from "@/components/three/theme";
-import type { Pt3 } from "@/lib/types";
+} from "@/components/three/PositionHelper.tsx";
+import { blue600, green600, red600 } from "@/components/three/theme.ts";
+import type { Pt3 } from "@/lib/types.ts";
 
 extend({ ParametricGeometry });
 

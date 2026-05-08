@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 
-import { initializeDarkMode, useSyncDarkMode } from "@/lib/api/dark-mode";
-import { useSyncHeight } from "@/lib/api/height";
+import { initializeDarkMode, useSyncDarkMode } from "@/lib/api/dark-mode.ts";
+import { useSyncHeight } from "@/lib/api/height.ts";
 
 import "./global.css";
 

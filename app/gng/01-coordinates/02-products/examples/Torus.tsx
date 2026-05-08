@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { DoubleSide, type Mesh } from "three";
 
-import { pointRadius, resolution } from "@/lib/constants";
-import { toroidal } from "@/lib/parametrizations";
+import { pointRadius, resolution } from "@/lib/constants.ts";
+import { toroidal } from "@/lib/parametrizations.ts";
 
-import { useStore } from "./store";
+import { useStore } from "./store.ts";
 
 const radius = 2;
 const tube = 0.5;

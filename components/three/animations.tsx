@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Children, cloneElement, useRef } from "react";
 import type { Object3D } from "three";
 
-import { setOpacity } from "@/lib/animation/three";
+import { setOpacity } from "@/lib/animation/three.ts";
 
 export const FadeIn3 = dynamic(
   () =>

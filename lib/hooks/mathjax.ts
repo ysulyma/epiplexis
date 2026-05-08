@@ -8,9 +8,9 @@ import {
 } from "react";
 import { objectEntries } from "ts-extras";
 
-import type { GuaranteedMap, Unsubscribe } from "@/lib/types";
+import type { GuaranteedMap, Unsubscribe } from "@/lib/types.ts";
 
-import { callAll } from "../utils";
+import { callAll } from "../utils.ts";
 
 export interface MathJaxTagConfig {
   className?: string;

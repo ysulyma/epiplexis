@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
-import { Curve, Svg } from "./curve";
+import { Curve, Svg } from "./curve.tsx";
 
 interface State {
   segments: number;

@@ -5,11 +5,11 @@ import { MathJax } from "better-react-mathjax";
 import { Coordinates, Mafs, MovablePoint, Vector, vec } from "mafs";
 import { memo, useMemo, useReducer } from "react";
 
-import { useMathJaxElements, useMathJaxInputs } from "@/lib/hooks/mathjax";
-import type { Pt2 } from "@/lib/types";
-import { makeContext } from "@/lib/utils";
+import { useMathJaxElements, useMathJaxInputs } from "@/lib/hooks/mathjax.ts";
+import type { Pt2 } from "@/lib/types.ts";
+import { makeContext } from "@/lib/utils.ts";
 
-import { format, leftColor, resultColor, rightColor } from "./shared";
+import { format, leftColor, resultColor, rightColor } from "./shared.tsx";
 
 const { raw } = String;
 

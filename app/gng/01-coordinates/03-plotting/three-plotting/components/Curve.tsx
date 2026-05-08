@@ -1,7 +1,7 @@
 import { Curve, DoubleSide, Vector3 } from "three";
 
-import { TURN } from "@/lib/constants";
-import { lerp } from "@/lib/math";
+import { TURN } from "@/lib/constants.ts";
+import { lerp } from "@/lib/math.ts";
 
 class CustomCurve extends Curve<Vector3> {
   getPoint(t: number, target = new Vector3()) {

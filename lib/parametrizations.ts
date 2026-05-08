@@ -1,4 +1,4 @@
-import type { Pt3 } from "./types";
+import type { Pt3 } from "./types.ts";
 
 const { cos, sin } = Math;
 

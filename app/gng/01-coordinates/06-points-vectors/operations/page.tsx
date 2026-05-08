@@ -2,10 +2,10 @@ import "mafs/core.css";
 import "mafs/font.css";
 import "./style.css";
 
-import { EpiplexisMathJaxContext } from "@/components/MathJaxContext";
+import { EpiplexisMathJaxContext } from "@/components/MathJaxContext.tsx";
 
-import { ThreeD } from "./ThreeD";
-import { TwoD } from "./TwoD";
+import { ThreeD } from "./ThreeD.tsx";
+import { TwoD } from "./TwoD.tsx";
 
 export default function Add() {
   return (

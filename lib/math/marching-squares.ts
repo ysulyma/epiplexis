@@ -1,4 +1,4 @@
-import type { Pt3 } from "@/lib/types";
+import type { Pt3 } from "@/lib/types.ts";
 
 /* marching squares */
 /* taken from https://stemkoski.github.io/MathBox/graph2d-implicit.html */

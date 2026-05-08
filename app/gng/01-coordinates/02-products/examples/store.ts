@@ -1,8 +1,8 @@
 import create from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
-import { TURN } from "@/lib/constants";
-import type { Pt3 } from "@/lib/types";
+import { TURN } from "@/lib/constants.ts";
+import type { Pt3 } from "@/lib/types.ts";
 
 export interface State {
   /** Cube coordinates [x, y, z] */

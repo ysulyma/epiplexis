@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import type { UpwardMessage } from "./messages";
+import type { UpwardMessage } from "./messages.ts";
 
 export function useSyncHeight() {
   useEffect(() => {

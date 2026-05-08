@@ -1,4 +1,4 @@
-import { KTX } from "@/components/KTX";
+import { KTX } from "@/components/KTX.tsx";
 
 export default function Statement() {
   const width = 200;
@@ -41,7 +41,7 @@ export default function Statement() {
         x={width}
         y={-height / 2}
       >
-        <KTX className="-translate-y-1/2 fixed block w-min translate-x-full">
+        <KTX className="fixed block w-min translate-x-full -translate-y-1/2">
           b
         </KTX>
       </foreignObject>
@@ -53,7 +53,7 @@ export default function Statement() {
         x={width / 2}
         y={-height / 2}
       >
-        <KTX className="-translate-x-full -translate-y-full fixed block w-min">
+        <KTX className="fixed block w-min -translate-x-full -translate-y-full">
           c
         </KTX>
       </foreignObject>
