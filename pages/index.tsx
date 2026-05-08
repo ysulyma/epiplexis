@@ -103,6 +103,7 @@ async function buildTree(dirname: string): Promise<Dir> {
   };
 
   for (const file of files) {
+    if (shouldSkipFile(file)) continue;
     const filename = `${dirname}/${file}`;
 
     const stat = await fsp.stat(filename);
@@ -115,6 +116,10 @@ async function buildTree(dirname: string): Promise<Dir> {
   }
 
   return dir;
+}
+
+function shouldSkipFile(basename: string) {
+  return basename === ".DS_Store";
 }
 
 function formatAppPath(path: string) {
