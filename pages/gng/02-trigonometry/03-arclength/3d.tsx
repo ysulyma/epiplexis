@@ -14,7 +14,6 @@ interface State {
 const initialSegments = 5;
 
 class CustomCurve extends Curve<Vector3> {
-  // biome-ignore lint/complexity/noUselessConstructor: need to make the constructor public https://biomejs.dev/linter/rules/no-useless-constructor/#caveat
   constructor() {
     super();
   }

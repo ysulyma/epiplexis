@@ -1,11 +1,8 @@
 import type { OrbitControls } from "@react-three/drei";
 import { createContext, useContext } from "react";
 
-export type RefHandle<T> =
-  T extends React.ForwardRefExoticComponent<infer C> ? C : never;
-
-export const ControlsContext = createContext<
-  RefHandle<typeof OrbitControls> | undefined
+const ControlsContext = createContext<
+  React.ComponentRef<typeof OrbitControls> | undefined
 >(undefined);
 ControlsContext.displayName = "Controls";
 

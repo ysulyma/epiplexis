@@ -1,4 +1,4 @@
-import type { Object3DNode } from "@react-three/fiber";
+import type { ThreeElement } from "@react-three/fiber";
 import { extend } from "@react-three/fiber";
 import { DoubleSide } from "three";
 import { ParametricGeometry } from "three-stdlib";
@@ -13,13 +13,11 @@ type Parametrization = ConstructorParameters<typeof ParametricGeometry>[0];
 // Add types to ThreeElements elements so primitives pick up on it
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    parametricGeometry: Object3DNode<
-      ParametricGeometry,
-      typeof ParametricGeometry
-    >;
+    parametricGeometry: ThreeElement<typeof ParametricGeometry>;
   }
 }
 
+/** @package */
 export const SurfaceGraph = () => {
   const fn: Parametrization = (u, v, target) => {
     // we want to graph over [-3, 3] x [-3, 3]

@@ -101,6 +101,7 @@ const { context, useIt: useTwoDState } = makeContext<
   State & { dispatch: React.Dispatch<Action> }
 >({ ...initialState, dispatch: () => {} });
 
+/** @package */
 export function TwoD() {
   const [state, dispatch] = useReducer(reducer, initialState);
 

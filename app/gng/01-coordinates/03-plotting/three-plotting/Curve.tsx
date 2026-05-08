@@ -4,6 +4,10 @@ import { TURN } from "@/lib/constants.ts";
 import { lerp } from "@/lib/math.ts";
 
 class CustomCurve extends Curve<Vector3> {
+  constructor() {
+    super();
+  }
+
   getPoint(t: number, target = new Vector3()) {
     const r = 5;
     const rotations = 2;
@@ -15,6 +19,7 @@ class CustomCurve extends Curve<Vector3> {
   }
 }
 
+/** @package */
 export const CurveGraph = () => {
   const curve = new CustomCurve();
   const tubularSegments = 128;

@@ -106,6 +106,7 @@ const { context, useIt: useThreeDState } = makeContext<
 
 const { raw } = String;
 
+/** @package */
 export function ThreeD() {
   const [state, dispatch] = useReducer(reducer, initialState);
 

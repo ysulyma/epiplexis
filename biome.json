@@ -73,6 +73,9 @@
       "a11y": {
         "noSvgWithoutTitle": "off"
       },
+      "complexity": {
+        "noUselessConstructor": "off"
+      },
       "correctness": {
         "noPrivateImports": "error",
         "useExhaustiveDependencies": "error",

@@ -25,7 +25,6 @@ export const Segment = forwardRef<Handle, Props>(function Segment(props, ref) {
   const [curve] = useState(
     () =>
       new (class extends Curve<Vector3> {
-        // biome-ignore lint/complexity/noUselessConstructor: make constructor public
         constructor() {
           super();
         }

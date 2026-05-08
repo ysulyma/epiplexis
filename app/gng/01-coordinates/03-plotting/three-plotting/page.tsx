@@ -10,8 +10,8 @@ import {
 } from "@/components/three/PositionHelper.tsx";
 import type { Pt3 } from "@/lib/types.ts";
 
-import { CurveGraph } from "./components/Curve.tsx";
-import { SurfaceGraph } from "./components/Surface.tsx";
+import { CurveGraph } from "./Curve.tsx";
+import { SurfaceGraph } from "./Surface.tsx";
 
 const cameraPosition: Pt3 = [10.77, -10.98, 9.41];
 const orbitTarget: Pt3 = [0, 0, 0];
