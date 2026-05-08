@@ -1,13 +1,14 @@
 import { between } from "@liqvid/utils/misc";
 import { onDrag } from "@liqvid/utils/react";
 import { screenToSVG, screenToSVGVector } from "@liqvid/utils/svg";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { KTX } from "@/components/KTX.tsx";
 import { DEGREES, TURN } from "@/lib/constants.ts";
 import { mod } from "@/lib/math.ts";
+import { cn } from "@/lib/utils.ts";
 
 const { cos, sin, tan, sqrt, atan2 } = Math;
 
@@ -45,7 +46,7 @@ const KtxLabel = ({
 
   return (
     <foreignObject
-      className={classNames("pointer-events-none overflow-visible", className)}
+      className={cn("pointer-events-none overflow-visible", className)}
       ref={foreign}
       x={(r + dr) * cos(theta)}
       y={-(r + dr) * sin(theta)}
@@ -107,6 +108,10 @@ export default function Minus() {
   return (
     <div className="h-screen w-screen">
       <svg className="mx-auto h-full p-2" ref={ref} viewBox="-175 -70 350 140">
+        <title>
+          two points on the circle, one at alpha (cos alpha, sin alpha) and the
+          other at (cos beta, sin beta)
+        </title>
         <circle
           className="stroke-violet-600"
           {...{ cx, cy, r }}

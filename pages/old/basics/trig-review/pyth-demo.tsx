@@ -1,26 +1,22 @@
 const { raw } = String;
 
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
+import { useEventListener } from "usehooks-ts";
 
 import { KTX } from "@/components/KTX.tsx";
 
 export default function PythagorasDemo() {
   const ref = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    function update() {
-      if (!ref.current) return;
-      const width = parseFloat(getComputedStyle(ref.current).width);
-      ref.current.style.fontSize = `${width / 0.2 / 100}px`;
-    }
+  const update = useEffectEvent(() => {
+    if (!ref.current) return;
+    const width = parseFloat(getComputedStyle(ref.current).width);
+    ref.current.style.fontSize = `${width / 0.2 / 100}px`;
+  });
 
-    window.addEventListener("resize", update);
-    update();
+  useEffect(update, []);
 
-    return () => {
-      window.removeEventListener("resize", update);
-    };
-  }, []);
+  useEventListener("resize", update);
 
   return (
     <figure
@@ -32,6 +28,10 @@ export default function PythagorasDemo() {
       }}
     >
       <svg viewBox="-5 -5 110 60" width="100%">
+        <title>
+          setup of the Pythagorean theorem: a right-angle triangle with side
+          lengths a, b and hypotenuse c
+        </title>
         <path
           className="stroke-black dark:stroke-white"
           d="M 0 50 L 100 0 v 50 z"

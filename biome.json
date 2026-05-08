@@ -70,6 +70,9 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      },
       "correctness": {
         "noPrivateImports": "error",
         "useExhaustiveDependencies": "error",
@@ -91,6 +94,14 @@
       "style": {
         "noNonNullAssertion": "off",
         "useTemplate": "off"
+      },
+      "suspicious": {
+        "noUnknownAtRules": {
+          "level": "error",
+          "options": {
+            "ignore": ["tailwind"]
+          }
+        }
       }
     }
   },

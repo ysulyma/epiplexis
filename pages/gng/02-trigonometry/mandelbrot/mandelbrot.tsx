@@ -1,12 +1,5 @@
 import { lerp } from "@liqvid/utils/misc";
-import type { MutableRefObject } from "react";
-import {
-  useCallback,
-  useEffect,
-  useEffectEvent,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 type Bounds = {
   xMin: number;

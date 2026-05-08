@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { cn } from "@/lib/utils.ts";
 
 export function ExternalLink({
   className,
@@ -6,7 +6,7 @@ export function ExternalLink({
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
     <a
-      className={classNames(
+      className={cn(
         "text-blue-800 hover:text-blue-700",
         "dark:text-blue-600 dark:hover:text-blue-500",
         className,

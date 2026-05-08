@@ -89,6 +89,7 @@ function Canvas({
 
   // render
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: this is interactive
     <svg
       className="w-full flex-1"
       {...events}
@@ -100,7 +101,13 @@ function Canvas({
           cx={circ.center[0]}
           cy={circ.center[1]}
           fill={circ.fill}
-          key={circleKey(circ) + `|${i}`}
+          key={
+            circleKey(circ) +
+            `|${
+              // biome-ignore lint/suspicious/noArrayIndexKey: need a way to distinguish multiples
+              i
+            }`
+          }
           r={circ.radius}
         />
       ))}
@@ -112,11 +119,11 @@ function Canvas({
 
 /** Hook for drawing new circles */
 function useDrawCircle(
-  ref: React.RefObject<SVGSVGElement>,
+  ref: React.RefObject<SVGSVGElement | null>,
   appendCircle: AppendCircle,
 ) {
   const dragging = useRef(false);
-  const center = useRef<Vec2 | undefined>();
+  const center = useRef<Vec2>(null);
   const radiusRef = useRef(0);
   const [radius, setRadius] = useState(0);
 
@@ -148,7 +155,7 @@ function useDrawCircle(
         center: center.current,
         radius: radiusRef.current,
       });
-      center.current = undefined;
+      center.current = null;
       dragging.current = false;
     },
   );
@@ -164,7 +171,7 @@ function useDrawCircle(
 
 /** Hook for displaying the position of the cursor as well as the selected color */
 function useCursorHint(
-  ref: React.RefObject<SVGSVGElement>,
+  ref: React.RefObject<SVGSVGElement | null>,
   dragging: React.RefObject<boolean>,
 ) {
   const [position, setPosition] = useState<Vec2 | undefined>();

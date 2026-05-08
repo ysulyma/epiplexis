@@ -40,6 +40,9 @@ export function CircleControl({
       aria-valuemin={0}
       aria-valuenow={value / DEGREES}
       className="mx-auto block h-20"
+      // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: this is interactive
+      role="slider"
+      tabIndex={0}
       viewBox="-50 -50 100 100"
     >
       <circle

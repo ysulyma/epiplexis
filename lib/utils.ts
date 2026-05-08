@@ -1,10 +1,10 @@
-import classNames from "classnames";
 import { type ClassValue, clsx } from "clsx";
 import {
   Children,
   createContext,
   createElement,
   forwardRef,
+  type JSX,
   useContext,
 } from "react";
 import type { ClassNameValue } from "tailwind-merge";
@@ -22,7 +22,7 @@ export function cn(...inputs: ClassValue[]) {
 export function brand<TagName extends keyof JSX.IntrinsicElements>(
   displayName: string,
   template: React.ReactNode,
-  mergeClassNames: (...args: ClassNameValue[]) => string = classNames,
+  mergeClassNames: (...args: ClassNameValue[]) => string = cn,
 ) {
   type Ref = React.ComponentRef<TagName>;
   type Props = JSX.IntrinsicElements[TagName];

@@ -1,11 +1,11 @@
 import { promises as fsp } from "node:fs";
 
-import classNames from "classnames";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useState } from "react";
 
 import { ExternalLink } from "@/components/ExternalLink.tsx";
+import { cn } from "@/lib/utils.ts";
 
 type Dir = {
   name: string;
@@ -69,7 +69,7 @@ function Tree({ dir }: { dir: Dir }) {
         {formatPagesPath(dir.name) + "/"}
       </span>
       {dir.children.length > 0 && (
-        <ol className={classNames("ml-8", expanded || "hidden")}>
+        <ol className={cn("ml-8", expanded || "hidden")}>
           {dir.children.map((item) => {
             if (typeof item === "string") {
               const isAppDir = item.startsWith("./app");

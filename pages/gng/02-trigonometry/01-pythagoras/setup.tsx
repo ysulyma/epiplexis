@@ -14,6 +14,10 @@ export default function Statement() {
       ${-padX} ${-height - padY}
       ${width + width / 8} ${height + height / 4}`}
     >
+      <title>
+        setup of the Pythagorean theorem: a right-angle triangle with side
+        lengths a, b and hypotenuse c
+      </title>
       <g>
         <path
           className="fill-violet-600"

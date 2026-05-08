@@ -1,5 +1,4 @@
 export const hexColor = (value: number) =>
-  // biome-ignore lint/style/useTemplate:
   "#" + value.toString(16).padStart(6, "0");
 
 export const slate50 = 0xf8fafc;

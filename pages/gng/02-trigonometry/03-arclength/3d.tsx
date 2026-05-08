@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { Curve, CurvePath, LineCurve3, Vector3 } from "three";
 
 import { Canvas } from "@/components/liqvid.tsx";
@@ -14,6 +14,11 @@ interface State {
 const initialSegments = 5;
 
 class CustomCurve extends Curve<Vector3> {
+  // biome-ignore lint/complexity/noUselessConstructor: need to make the constructor public https://biomejs.dev/linter/rules/no-useless-constructor/#caveat
+  constructor() {
+    super();
+  }
+
   getPoint(t: number, optionalTarget = new Vector3()) {
     t = -1 + 2 * t;
     const tx = 4 * t * Math.cos(3 * 2 * Math.PI * t);
@@ -38,7 +43,7 @@ export default function ThreeD() {
    * Update the piecewise-linear approximation of the curve
    * and its arclength
    */
-  const updateApproximation = (segments: number) => {
+  const updateApproximation = useEffectEvent((segments: number) => {
     // initial point
     let prevPt = curve.getPoint(0);
     let arclength = 0;
@@ -57,13 +62,13 @@ export default function ThreeD() {
     }
 
     // update
-    const linearApproximation = new CurvePath();
+    const linearApproximation = new CurvePath<Vector3>();
     linearApproximation.curves = curves;
     setState({ arclength, linearApproximation, segments });
-  };
+  });
 
   // initial render
-  useEffect(() => updateApproximation(initialSegments), [updateApproximation]);
+  useEffect(() => updateApproximation(initialSegments), []);
 
   /** Change event handler */
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

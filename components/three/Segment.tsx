@@ -1,7 +1,7 @@
 import { useTime } from "@liqvid/playback/react";
 import { lerp } from "@liqvid/utils/misc";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import type { Mesh } from "three";
+import type { Material, Mesh } from "three";
 import { Curve, Plane, TubeGeometry, Vector3 } from "three";
 
 type Pt3 = [number, number, number];
@@ -22,28 +22,37 @@ export const Segment = forwardRef<Handle, Props>(function Segment(props, ref) {
   const [va] = useState(() => new Vector3(...props.from));
   const [vb] = useState(() => new Vector3(...props.to));
 
-  const [curve] = useState(() => new Curve<Vector3>());
+  const [curve] = useState(
+    () =>
+      new (class extends Curve<Vector3> {
+        // biome-ignore lint/complexity/noUselessConstructor: make constructor public
+        constructor() {
+          super();
+        }
+      })(),
+  );
   curve.getPoint = (t, dest = new Vector3()) => {
     return dest.lerpVectors(va, vb, t);
   };
 
   /* animate segment */
-  if (props.a) {
-    const normal = new Vector3().subVectors(va, vb).normalize();
-    const plane = new Plane(normal, 0);
-    const da = -plane.distanceToPoint(va);
-    const db = -plane.distanceToPoint(vb);
-    let prev: number;
+  const normal = new Vector3().subVectors(va, vb).normalize();
+  const plane = new Plane(normal, 0);
+  const da = -plane.distanceToPoint(va);
+  const db = -plane.distanceToPoint(vb);
+  let prev: number;
 
-    useTime((t) => {
-      const value = lerp(da, db, props.a(t));
-      if (value !== prev) {
-        const plane = new Plane(normal, value);
+  useTime((t) => {
+    if (!props.a) return;
+    const value = lerp(da, db, props.a(t));
+    if (value !== prev) {
+      const plane = new Plane(normal, value);
+      if (innerRef.current) {
         (innerRef.current.material as Material).clippingPlanes = [plane];
-        prev = value;
       }
-    }, []);
-  }
+      prev = value;
+    }
+  }, []);
 
   // update tip
   useImperativeHandle(
@@ -53,13 +62,15 @@ export const Segment = forwardRef<Handle, Props>(function Segment(props, ref) {
         mesh: innerRef.current,
         setTo(x: number, y: number, z: number) {
           vb.set(x, y, z);
+
+          if (!innerRef.current) return;
           innerRef.current.geometry = new TubeGeometry(curve, undefined, 0.01);
         },
       }) as Mesh & Handle,
     [curve, vb],
   );
 
-  const innerRef = useRef<Mesh>();
+  const innerRef = useRef<Mesh>(null);
 
   return (
     <mesh name="segment" ref={innerRef}>
