@@ -14,11 +14,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@liqvid/duration": "^1.4.0",
     "@liqvid/event-emitter": "1.0.0-alpha.0",
-    "@liqvid/katex": "^0.1.0",
+    "@liqvid/hydration": "1.0.0-alpha.3",
+    "@liqvid/katex": "1.0.0-alpha.1",
     "@liqvid/mathjax": "^0.1.2",
     "@liqvid/react-three": "^2.0.0",
-    "@liqvid/utils": "2.0.0-alpha.2",
+    "@liqvid/ssr": "^1.0.0-alpha.1",
+    "@liqvid/utils": "^2.0.0-alpha.3",
+    "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-switch": "^1.0.3",
     "@react-three/drei": "^10.7",
     "@react-three/fiber": "^9.6.1",
@@ -28,7 +32,7 @@
     "classnames": "^2.5.1",
     "clsx": "^2.1.0",
     "dotenv": "^16.4.5",
-    "liqvid": "^2.1.19",
+    "liqvid": "^3.0.0-alpha.5",
     "mafs": "^0.18.8",
     "next": "^16.2.6",
     "postcss": "8.4.33",
@@ -45,6 +49,7 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@babel/types": "^7.29.0",
     "@biomejs/biome": "2.4.14",
     "@types/katex": "^0.16.7",
     "@types/node": "^24",
@@ -52,8 +57,10 @@
     "@types/react-dom": "^19.2",
     "@types/react-katex": "^3.0.4",
     "@types/three": "^0.160.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "no-private-imports": "^0.0.1",
     "portless": "^0.12.0",
+    "raw-loader": "^4.0.2",
     "turbo": "1.11.3"
   },
   "version": "0.1.0",
@@ -61,7 +68,11 @@
     "."
   ],
   "overrides": {
+    "@liqvid/duration": "$@liqvid/duration",
+    "@liqvid/ssr": "$@liqvid/ssr",
+    "@liqvid/utils": "$@liqvid/utils",
     "@react-three/fiber": "$@react-three/fiber",
+    "liqvid": "$liqvid",
     "react": "$react",
     "react-dom": "$react-dom"
   }

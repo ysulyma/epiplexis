@@ -180,7 +180,7 @@ function LeftMovablePoint() {
   return (
     <MovablePoint
       color={leftColor}
-      onMove={(left: Coords) => dispatch({ type: "setLeft", value: left })}
+      onMove={(left) => dispatch({ type: "setLeft", value: left })}
       point={left}
     />
   );
@@ -191,7 +191,7 @@ function RightMovablePoint() {
   return (
     <MovablePoint
       color={rightColor}
-      onMove={(right: Coords) => dispatch({ type: "setRight", value: right })}
+      onMove={(right) => dispatch({ type: "setRight", value: right })}
       point={right}
     />
   );
@@ -202,9 +202,7 @@ function ResultMovablePoint() {
   return (
     <MovablePoint
       color={resultColor}
-      onMove={(result: Coords) =>
-        dispatch({ type: "setResult", value: result })
-      }
+      onMove={(result) => dispatch({ type: "setResult", value: result })}
       point={result}
     />
   );

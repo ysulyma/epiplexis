@@ -1,4 +1,4 @@
-import { onDrag, screenToSVG } from "@liqvid/utils";
+import { onDragReact, screenToSVG } from "@liqvid/utils";
 import { useMemo, useRef } from "react";
 
 import { DEGREES, TURN } from "@/lib/constants.ts";
@@ -15,7 +15,7 @@ export function CircleControl({
 
   const events = useMemo(
     () =>
-      onDrag(
+      onDragReact(
         (_e, hit) => {
           if (!target.current) return;
 

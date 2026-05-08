@@ -25,6 +25,17 @@ let nextConfig: NextConfig = {
     ],
   },
   output: "export",
+  reactCompiler: true,
+
+  turbopack: {
+    // enable importing .tex files
+    rules: {
+      "*.tex": {
+        as: "*.js",
+        loaders: ["raw-loader"],
+      },
+    },
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

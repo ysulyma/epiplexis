@@ -1,3 +1,5 @@
+"use client";
+
 import { bind } from "@liqvid/utils";
 import { useEffect, useState } from "react";
 

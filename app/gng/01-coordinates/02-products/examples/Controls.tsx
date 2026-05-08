@@ -49,6 +49,7 @@ function setIndexTorus(n: number) {
   };
 }
 
+/** @package */
 export function Controls() {
   return (
     <form className="flex w-full justify-around pt-2">

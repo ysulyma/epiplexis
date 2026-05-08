@@ -1,112 +1,155 @@
+"use client";
+
 import { Html as DreiHtml } from "@react-three/drei";
-import katex from "katex";
+import { Canvas as ThreeCanvas, useThree } from "@react-three/fiber";
+import { clsx } from "clsx";
+import {
+  Controls,
+  type DurationLike,
+  type HidingStrategy,
+  Playback,
+  PlaybackProvider,
+  Player,
+  type Script,
+  ScriptProvider,
+  SegmentProvider,
+} from "liqvid";
 import dynamic from "next/dynamic";
-import Head from "next/head";
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 import { fadeIn } from "@/lib/animation/css.ts";
 
-// @todo make Liqvid support Next
-export const Player = dynamic(
-  () =>
-    import("liqvid").then((Liqvid) => {
-      return function Player(
-        props: React.ComponentPropsWithoutRef<typeof Liqvid.Player>,
-      ) {
-        return (
-          <>
-            <Head>
-              <style>{`
-          .lv-player, .lv-canvas {
-            background: transparent !important;
-          }`}</style>
-            </Head>
-            <Liqvid.Player
-              controls={
-                <>
-                  <Liqvid.Controls.PlayPause />
-                  <Liqvid.Controls.TimeDisplay />
+import { FullScreen, PlayPause } from "./controls";
+import { shortcuts } from "./shortcuts";
 
-                  <div className="lv-controls-right">
-                    <Liqvid.Controls.FullScreen />
-                  </div>
-                </>
-              }
-              {...props}
-            />
-          </>
-        );
-      };
-    }),
-  { ssr: false },
-);
+export function LiqvidPlayer<M extends string>({
+  classNames: propClassNames,
+  children,
+  duration,
+  hideWith,
+  loadingScreen = false,
+  script,
+  thumbs,
+  ...props
+}: React.ComponentProps<typeof Player.Root> &
+  Pick<React.ComponentProps<typeof Controls.ScrubberBar>, "thumbs"> & {
+    classNames?: {
+      canvas?: string;
+      controls?: string;
+    };
 
-export const KTX = forwardRef(function KTX(props, ref) {
-  return <DynamicKTX {...props} forwardedRef={ref} />;
-});
+    hideWith?: HidingStrategy;
 
-const DynamicKTX = dynamic(
-  () =>
-    import("@liqvid/katex").then(({ KTX }) => {
-      return function DynamicKTX({
-        forwardedRef,
-        ...props
-      }: React.ComponentProps<typeof KTX> & {
-        forwardedRef?: React.ComponentRef<typeof KTX>;
-      }) {
-        return <KTX {...props} ref={forwardedRef} />;
-      };
-    }),
-  {
-    loading: () => <span />,
-    ssr: false,
-  },
-);
+    loadingScreen?: boolean;
+  } & (
+    | {
+        duration?: DurationLike;
+        script?: undefined;
+      }
+    | {
+        duration?: undefined;
+        script: Script<M>;
+      }
+  )) {
+  // use playback from provided Script if any, otherwise create one from duration
+  const [playback] = useState(() => {
+    if (script) {
+      return script.playback;
+    }
+    const playback = new Playback();
+    playback.duration$ = duration ?? { minutes: 1 };
+    return playback;
+  });
 
-export const Canvas = dynamic(
-  () => import("@liqvid/react-three").then(({ Canvas }) => Canvas),
-  { ssr: false },
-);
+  return (
+    <ScriptProvider script={script} shortcuts={shortcuts.script}>
+      <PlaybackProvider value={playback}>
+        <SegmentProvider hideWith={hideWith}>
+          <Player.Root {...props}>
+            <Player.Controls
+              className={propClassNames?.controls}
+              hideAfter={{ seconds: 3 }}
+            >
+              <Controls.ScrubberBar
+                shortcuts={shortcuts.seeking}
+                thumbs={thumbs}
+              />
+              {/* <KeyboardShortcuts /> */}
+              <div className="lv-controls-buttons h-(--lv-controls-height)">
+                <PlayPause />
+
+                <Controls.TimeDisplay />
+
+                {/* right controls */}
+                <div className="lv-controls-right h-full">
+                  <FullScreen />
+                </div>
+              </div>
+            </Player.Controls>
+            <Player.Canvas
+              className={clsx(
+                "bg-[#eee] text-black",
+                "dark:bg-[#202020] dark:text-white",
+                "transition-colors duration-150",
+                propClassNames?.canvas,
+              )}
+              pauseOnClick={process.env.NODE_ENV === "production"}
+            >
+              {children}
+            </Player.Canvas>
+          </Player.Root>
+        </SegmentProvider>
+      </PlaybackProvider>
+    </ScriptProvider>
+  );
+}
+
+/**
+ * Liqvid-aware Canvas component @react-three/fiber
+ */
+export function Canvas({
+  children,
+  "data-affords": dataAffords,
+  ...props
+}: React.ComponentProps<typeof ThreeCanvas> & { "data-affords"?: string }) {
+  return (
+    <ThreeCanvas resize={{ polyfill: ResizeObserver }} {...props}>
+      <Fixes dataAffords={dataAffords} />
+      {children}
+    </ThreeCanvas>
+  );
+}
+
+/** Default affordances: click and arrow keys */
+const defaultAffords = "click keys(ArrowUp,ArrowDown,ArrowLeft,ArrowRight)";
+
+function Fixes({ dataAffords }: { dataAffords?: string }): null {
+  const { gl } = useThree();
+
+  useEffect(() => {
+    const affords = dataAffords ?? defaultAffords;
+    if (affords) {
+      gl.domElement.setAttribute("data-affords", affords);
+    }
+    gl.domElement.style.touchAction = "none";
+  }, [dataAffords, gl.domElement]);
+
+  return null;
+}
 
 export const Html = dynamic(
   () =>
     import("liqvid").then(
-      ({ Player, usePlayer }) =>
+      () =>
         function Html({
           children,
           ...props
         }: React.PropsWithChildren<React.ComponentProps<typeof DreiHtml>>) {
-          return (
-            <DreiHtml {...props}>
-              <Player.Context.Provider value={usePlayer()}>
-                {children}
-              </Player.Context.Provider>
-            </DreiHtml>
-          );
+          return <DreiHtml {...props}>{children}</DreiHtml>;
         },
     ),
   { ssr: false },
 );
-
-export function LoadKaTeX() {
-  if (typeof globalThis.window !== "undefined") {
-    // biome-ignore lint/suspicious/noExplicitAny:
-    (window as any).katex = katex;
-  }
-
-  const base =
-    globalThis.location?.origin === "http://localhost:3000"
-      ? ""
-      : "/epiplexis-next";
-
-  return (
-    <Head>
-      <script async src={`${base}/symbols.tex`} type="math/tex" />
-      {/* @todo fix @liqvid/katex so this isn't necessary */}
-      <script async src="katex.js" />
-    </Head>
-  );
-}
 
 export function toposort(a: Node, b: Node) {
   const pos = a.compareDocumentPosition(b);

@@ -1,4 +1,4 @@
-import { onDrag, screenToSVG } from "@liqvid/utils";
+import { onDragReact, screenToSVG } from "@liqvid/utils";
 import { useRef, useState } from "react";
 
 /** Vector in R^2 */
@@ -88,7 +88,6 @@ function Canvas({
 
   // render
   return (
-    // biome-ignore lint/a11y/noSvgWithoutTitle: this is interactive
     <svg
       className="w-full flex-1"
       {...events}
@@ -126,7 +125,7 @@ function useDrawCircle(
   const radiusRef = useRef(0);
   const [radius, setRadius] = useState(0);
 
-  const events = onDrag(
+  const events = onDragReact(
     // move handler
     (_e, hit) => {
       if (!ref.current || !center.current) return;

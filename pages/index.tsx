@@ -34,7 +34,6 @@ export default function Page({
       <ExternalLink href="https://epiplexis.xyz/">Epiplexis</ExternalLink>. You
       can clone the repository from{" "}
       <ExternalLink href="https://github.com/ysulyma/epiplexis-next">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
           className="mr-1 inline h-6 w-6"
@@ -61,7 +60,12 @@ function Tree({ dir }: { dir: Dir }) {
 
   return (
     // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
-    <div aria-expanded={expanded} className="group" role="treeitem">
+    <div
+      aria-expanded={expanded}
+      className="group"
+      role="treeitem"
+      tabIndex={0}
+    >
       <span
         className="cursor-pointer"
         onClick={() => setExpanded((prev) => !prev)}
@@ -76,7 +80,7 @@ function Tree({ dir }: { dir: Dir }) {
               if (isAppDir && !item.endsWith("page.tsx")) return null;
 
               return (
-                <li key={item} role="treeitem">
+                <li key={item} role="treeitem" tabIndex={0}>
                   <Link
                     className="text-blue-600"
                     href={isAppDir ? appHref(item) : pagesHref(item)}

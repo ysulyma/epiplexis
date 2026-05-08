@@ -62,7 +62,6 @@ function useMathJaxMap<
     selector,
     getItem,
   }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selector: (id: string) => string;
     getItem: (
       elt: TElement["element"],

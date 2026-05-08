@@ -32,7 +32,7 @@ export function Cylinder(props: JSX.IntrinsicElements["group"]) {
         <cylinderGeometry args={[r, r, h, resolution, resolution, true]} />
         <meshPhysicalMaterial
           color="blue"
-          metalness={0.4}
+          metalness={0.3}
           roughness={0}
           side={DoubleSide}
         />
