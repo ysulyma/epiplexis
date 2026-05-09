@@ -1,53 +1,20 @@
-import dynamic from "next/dynamic";
-import { Children, cloneElement, useMemo } from "react";
+import { Animate, Duration } from "liqvid";
 
-export const FadeIn = dynamic(
-  () =>
-    import("liqvid").then(
-      ({ useScript }) =>
-        function FadeIn({
-          children,
-          delay = 0,
-          duration = 300,
-          start = 0,
-          endValue = 1,
-        }: {
-          children: React.ReactNode;
-          duration?: number;
-          delay?: number;
-          endValue?: number;
-          start?: string | number;
-        }) {
-          const Child = Children.only(children) as React.ReactElement;
-          const script = useScript();
+const defaultDuration = new Duration({ ms: 300 });
 
-          const animation = useMemo(
-            () =>
-              script.playback.newAnimation(
-                [
-                  { opacity: 0, pointerEvents: "none" },
-                  { opacity: endValue, pointerEvents: "all" },
-                ],
-                {
-                  delay: script.parseStart(start) + delay,
-                  duration,
-                  easing: "ease-in",
-                  fill: "both",
-                },
-              ),
-            [delay, duration, endValue, script, start],
-          );
-
-          const ref = (value) => {
-            if (value === null) {
-              animation(value);
-            } else if (typeof value === "object" && "domElement" in value) {
-              animation(value.domElement);
-            }
-          };
-
-          return <>{cloneElement(Child, { ref })}</>;
-        },
-    ),
-  { ssr: false },
-);
+export function FadeIn<M extends string>({
+  endValue = 1,
+  ...props
+}: {
+  endValue?: number;
+} & Partial<React.ComponentProps<typeof Animate<M>>>) {
+  return (
+    <Animate<M>
+      duration={defaultDuration}
+      easing="ease-in"
+      fill="both"
+      keyframes={[{ opacity: 0 }, { opacity: endValue }]}
+      {...props}
+    />
+  );
+}

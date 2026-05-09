@@ -8,7 +8,7 @@ import { Controls } from "liqvid";
 
 import { shortcuts } from "./shortcuts.ts";
 
-const iconClassName = "h-[calc(var(--lv-controls-height)*0.45)] w-auto";
+const iconClassName = "!h-[calc(var(--lv-controls-height)*0.45)] w-auto";
 
 /** @package Fullscreen control */
 export function FullScreen() {

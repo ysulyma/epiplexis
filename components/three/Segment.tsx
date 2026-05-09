@@ -17,64 +17,70 @@ interface Props {
   a?: (t: number) => number;
 }
 
-export const Segment = forwardRef<Handle, Props>(function Segment(props, ref) {
-  /* curve */
-  const [va] = useState(() => new Vector3(...props.from));
-  const [vb] = useState(() => new Vector3(...props.to));
+export const LineSegment = forwardRef<Handle, Props>(
+  function Segment(props, ref) {
+    /* curve */
+    const [va] = useState(() => new Vector3(...props.from));
+    const [vb] = useState(() => new Vector3(...props.to));
 
-  const [curve] = useState(
-    () =>
-      new (class extends Curve<Vector3> {
-        constructor() {
-          super();
+    const [curve] = useState(
+      () =>
+        new (class extends Curve<Vector3> {
+          constructor() {
+            super();
+          }
+        })(),
+    );
+    curve.getPoint = (t, dest = new Vector3()) => {
+      return dest.lerpVectors(va, vb, t);
+    };
+
+    /* animate segment */
+    const normal = new Vector3().subVectors(va, vb).normalize();
+    const plane = new Plane(normal, 0);
+    const da = -plane.distanceToPoint(va);
+    const db = -plane.distanceToPoint(vb);
+    let prev: number;
+
+    useTime((t) => {
+      if (!props.a) return;
+      const value = lerp(da, db, props.a(t));
+      if (value !== prev) {
+        const plane = new Plane(normal, value);
+        if (innerRef.current) {
+          (innerRef.current.material as Material).clippingPlanes = [plane];
         }
-      })(),
-  );
-  curve.getPoint = (t, dest = new Vector3()) => {
-    return dest.lerpVectors(va, vb, t);
-  };
-
-  /* animate segment */
-  const normal = new Vector3().subVectors(va, vb).normalize();
-  const plane = new Plane(normal, 0);
-  const da = -plane.distanceToPoint(va);
-  const db = -plane.distanceToPoint(vb);
-  let prev: number;
-
-  useTime((t) => {
-    if (!props.a) return;
-    const value = lerp(da, db, props.a(t));
-    if (value !== prev) {
-      const plane = new Plane(normal, value);
-      if (innerRef.current) {
-        (innerRef.current.material as Material).clippingPlanes = [plane];
+        prev = value;
       }
-      prev = value;
-    }
-  }, []);
+    });
 
-  // update tip
-  useImperativeHandle(
-    ref,
-    () =>
-      ({
-        mesh: innerRef.current,
-        setTo(x: number, y: number, z: number) {
-          vb.set(x, y, z);
+    // update tip
+    useImperativeHandle(
+      ref,
+      () =>
+        ({
+          mesh: innerRef.current,
+          setTo(x: number, y: number, z: number) {
+            vb.set(x, y, z);
 
-          if (!innerRef.current) return;
-          innerRef.current.geometry = new TubeGeometry(curve, undefined, 0.01);
-        },
-      }) as Mesh & Handle,
-    [curve, vb],
-  );
+            if (!innerRef.current) return;
+            innerRef.current.geometry = new TubeGeometry(
+              curve,
+              undefined,
+              0.01,
+            );
+          },
+        }) as Mesh & Handle,
+      [curve, vb],
+    );
 
-  const innerRef = useRef<Mesh>(null);
+    const innerRef = useRef<Mesh>(null);
 
-  return (
-    <mesh name="segment" ref={innerRef}>
-      <tubeGeometry args={[curve, undefined, 0.01]} />
-      <meshToonMaterial color={0xffffff} />
-    </mesh>
-  );
-});
+    return (
+      <mesh name="segment" ref={innerRef}>
+        <tubeGeometry args={[curve, undefined, 0.01]} />
+        <meshToonMaterial color={0xffffff} />
+      </mesh>
+    );
+  },
+);

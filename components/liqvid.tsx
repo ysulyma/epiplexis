@@ -1,6 +1,8 @@
 "use client";
 
-import { Html as DreiHtml } from "@react-three/drei";
+import { ResizeObserver } from "@juggle/resize-observer";
+import { useContextBridge } from "@react-three/drei";
+import { Html as DreiHtml } from "@react-three/drei/web/Html";
 import { Canvas as ThreeCanvas, useThree } from "@react-three/fiber";
 import { clsx } from "clsx";
 import {
@@ -13,14 +15,18 @@ import {
   type Script,
   ScriptProvider,
   SegmentProvider,
+  useKeymapOptional,
+  usePlayback,
+  usePlaybackOptional,
+  useScript,
+  useScriptOptional,
 } from "liqvid";
-import dynamic from "next/dynamic";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { fadeIn } from "@/lib/animation/css.ts";
 
-import { FullScreen, PlayPause } from "./controls";
-import { shortcuts } from "./shortcuts";
+import { FullScreen, PlayPause } from "./controls.tsx";
+import { shortcuts } from "./shortcuts.ts";
 
 export function LiqvidPlayer<M extends string>({
   classNames: propClassNames,
@@ -112,11 +118,47 @@ export function Canvas({
   "data-affords": dataAffords,
   ...props
 }: React.ComponentProps<typeof ThreeCanvas> & { "data-affords"?: string }) {
+  const ContextBridge = useLiqvidContextBridge();
   return (
     <ThreeCanvas resize={{ polyfill: ResizeObserver }} {...props}>
-      <Fixes dataAffords={dataAffords} />
-      {children}
+      <ContextBridge>
+        <Fixes dataAffords={dataAffords} />
+        {children}
+      </ContextBridge>
     </ThreeCanvas>
+  );
+}
+
+/**
+ * Liqvid-aware HTML component @react-three/fiber
+ */
+export function Html({
+  children,
+  ...props
+}: React.ComponentProps<typeof DreiHtml>) {
+  const ContextBridge = useLiqvidContextBridge();
+
+  return (
+    <DreiHtml {...props}>
+      <ContextBridge>{children}</ContextBridge>
+    </DreiHtml>
+  );
+}
+
+/**
+ * Get a `<ContextBridge>` to bridge Liqvid context into a React Three Fiber scene.
+ */
+export function useLiqvidContextBridge() {
+  const symbols = globalThis as Record<symbol, React.Context<unknown>>;
+
+  return useContextBridge(
+    ...[
+      symbols[Symbol.for("@lqv/playback")],
+      symbols[Symbol.for("@liqvid/script")],
+      symbols[Symbol.for("@liqvid/keymap")],
+      // mistaken release
+      symbols[Symbol.for("@lqv/keymap")],
+    ].filter(Boolean),
   );
 }
 
@@ -137,20 +179,6 @@ function Fixes({ dataAffords }: { dataAffords?: string }): null {
   return null;
 }
 
-export const Html = dynamic(
-  () =>
-    import("liqvid").then(
-      () =>
-        function Html({
-          children,
-          ...props
-        }: React.PropsWithChildren<React.ComponentProps<typeof DreiHtml>>) {
-          return <DreiHtml {...props}>{children}</DreiHtml>;
-        },
-    ),
-  { ssr: false },
-);
-
 export function toposort(a: Node, b: Node) {
   const pos = a.compareDocumentPosition(b);
   if (pos & Node.DOCUMENT_POSITION_PRECEDING) return -1;
@@ -158,52 +186,48 @@ export function toposort(a: Node, b: Node) {
   return 0;
 }
 
-export const KatexAnimations = dynamic(
-  () =>
-    import("liqvid").then(
-      ({ usePlayback, useScript }) =>
-        function KatexAnimations({ children }: { children: React.ReactNode }) {
-          const ref = useRef<HTMLDivElement>(null);
-          const playback = usePlayback();
-          const script = useScript();
+export function KatexAnimations({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const playback = usePlayback();
+  const script = useScript();
 
-          useEffect(() => {
-            if (!ref.current) return;
-            const observer = new MutationObserver((mutations) => {
-              for (const mutation of mutations) {
-                const { target } = mutation;
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        const { target } = mutation;
 
-                // only process KaTeX descendants
-                if (!(target instanceof HTMLElement)) continue;
-                if (
-                  !(
-                    target.classList.contains("katex") ||
-                    target.classList.contains("katex-display")
-                  )
-                ) {
-                  continue;
-                }
+        // only process KaTeX descendants
+        if (!(target instanceof HTMLElement)) continue;
+        if (
+          !(
+            target.classList.contains("katex") ||
+            target.classList.contains("katex-display")
+          )
+        ) {
+          continue;
+        }
 
-                const anims = Array.from(
-                  target.querySelectorAll("*[data-anim]"),
-                ) as HTMLSpanElement[];
-                for (const node of anims) {
-                  const [, marker] = node.dataset.anim?.split(";");
-                  fadeIn(playback, script.parseStart(marker))(node);
-                  // if (name in animations) {
-                  //   animations[name](marker)(node);
-                  // }
-                }
-              }
-            });
+        const anims = Array.from(
+          target.querySelectorAll("*[data-anim]"),
+        ) as HTMLSpanElement[];
+        for (const node of anims) {
+          const [, marker] = node.dataset.anim!.split(";");
+          fadeIn(
+            playback,
+            script.markers.get(marker).start.inMilliseconds(),
+          )(node);
+          // if (name in animations) {
+          //   animations[name](marker)(node);
+          // }
+        }
+      }
+    });
 
-            observer.observe(ref.current, { childList: true, subtree: true });
+    observer.observe(ref.current, { childList: true, subtree: true });
 
-            return () => observer.disconnect();
-          }, [playback, script]);
+    return () => observer.disconnect();
+  }, [playback, script]);
 
-          return <div ref={ref}>{children}</div>;
-        },
-    ),
-  { ssr: false },
-);
+  return <div ref={ref}>{children}</div>;
+}
