@@ -1,6 +1,14 @@
-import { useTime } from "@liqvid/playback/react";
+import { usePlayback, useTime$ } from "@liqvid/playback/react";
 import { lerp } from "@liqvid/utils";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import type { Duration } from "liqvid";
+import {
+  forwardRef,
+  useEffect,
+  useEffectEvent,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import type { Material, Mesh } from "three";
 import { Curve, Plane, TubeGeometry, Vector3 } from "three";
 
@@ -14,7 +22,7 @@ interface Handle {
 interface Props {
   from: Pt3;
   to: Pt3;
-  a?: (t: number) => number;
+  a?: (t: Duration) => number;
 }
 
 export const LineSegment = forwardRef<Handle, Props>(
@@ -42,7 +50,7 @@ export const LineSegment = forwardRef<Handle, Props>(
     const db = -plane.distanceToPoint(vb);
     let prev: number;
 
-    useTime((t) => {
+    const update = useEffectEvent((t: Duration) => {
       if (!props.a) return;
       const value = lerp(da, db, props.a(t));
       if (value !== prev) {
@@ -53,6 +61,13 @@ export const LineSegment = forwardRef<Handle, Props>(
         prev = value;
       }
     });
+
+    const playback = usePlayback();
+
+    useTime$(update);
+    useEffect(() => {
+      update(playback.currentTime$);
+    }, [playback]);
 
     // update tip
     useImperativeHandle(

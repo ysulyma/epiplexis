@@ -8,7 +8,7 @@ import {
   easings,
   useScript,
 } from "liqvid";
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { Object3D } from "three";
 
 import { setOpacity } from "@/lib/animation/three.ts";
@@ -30,21 +30,31 @@ export function FadeIn3<M extends string>({
 }) {
   const script = useScript<M>();
 
-  const animOpacity = animate$({
-    duration,
-    easing: bezier(...easings.easeInCubic),
-    endValue,
-    startTime: (typeof start === "string"
-      ? script.markers.get(start).start
-      : Duration.from(start)
-    ).plus(delay),
-  });
+  const animOpacity = useMemo(
+    () =>
+      animate$({
+        duration,
+        easing: bezier(...easings.easeInCubic),
+        endValue,
+        startTime: (typeof start === "string"
+          ? script.markers.get(start).start
+          : Duration.from(start)
+        ).plus(delay),
+      }),
+    [delay, duration, endValue, script, start],
+  );
 
   const ref = useRef<Object3D>(null);
   useTime$(animOpacity, (opacity) => {
     if (!ref.current) return;
     setOpacity(ref.current, opacity);
   });
+
+  // initial
+  useEffect(() => {
+    if (!ref.current) return;
+    setOpacity(ref.current, animOpacity(script.playback.currentTime$));
+  }, [animOpacity, script.playback]);
 
   // biome-ignore lint/suspicious/noExplicitAny: Slot assumes HTML
   return <Slot ref={ref as any}>{children}</Slot>;
@@ -101,6 +111,12 @@ export function FadeInOut3<M extends string>({
     if (!ref.current) return;
     setOpacity(ref.current, opacity);
   });
+
+  // initial
+  useEffect(() => {
+    if (!ref.current) return;
+    setOpacity(ref.current, animOpacity(script.playback.currentTime$));
+  }, [animOpacity, script.playback]);
 
   // biome-ignore lint/suspicious/noExplicitAny: Slot assumes HTML
   return <Slot ref={ref as any}>{children}</Slot>;

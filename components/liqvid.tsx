@@ -1,12 +1,15 @@
 "use client";
 
 import { ResizeObserver } from "@juggle/resize-observer";
+import { KaTeXProvider, useKaTeXContext } from "@liqvid/katex";
+import { parseTime$, timeRegexp } from "@liqvid/utils";
 import { useContextBridge } from "@react-three/drei";
 import { Html as DreiHtml } from "@react-three/drei/web/Html";
 import { Canvas as ThreeCanvas, useThree } from "@react-three/fiber";
 import { clsx } from "clsx";
 import {
   Controls,
+  Duration,
   type DurationLike,
   type HidingStrategy,
   Playback,
@@ -15,24 +18,21 @@ import {
   type Script,
   ScriptProvider,
   SegmentProvider,
-  useKeymapOptional,
-  usePlayback,
-  usePlaybackOptional,
-  useScript,
-  useScriptOptional,
 } from "liqvid";
-import { useEffect, useRef, useState } from "react";
-
-import { fadeIn } from "@/lib/animation/css.ts";
+import { useEffect, useState } from "react";
 
 import { FullScreen, PlayPause } from "./controls.tsx";
 import { shortcuts } from "./shortcuts.ts";
+import {
+  type AnimationConfig,
+  TargetDescendants,
+} from "./TargetDescendants.tsx";
 
 export function LiqvidPlayer<M extends string>({
   classNames: propClassNames,
   children,
   duration,
-  hideWith,
+  hideWith = "invisible",
   loadingScreen = false,
   script,
   thumbs,
@@ -179,55 +179,88 @@ function Fixes({ dataAffords }: { dataAffords?: string }): null {
   return null;
 }
 
-export function toposort(a: Node, b: Node) {
-  const pos = a.compareDocumentPosition(b);
-  if (pos & Node.DOCUMENT_POSITION_PRECEDING) return -1;
-  if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return 1;
-  return 0;
-}
+const { raw } = String;
 
 export function KatexAnimations({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const playback = usePlayback();
-  const script = useScript();
+  const macros = useKaTeXContext().macros;
 
-  useEffect(() => {
-    if (!ref.current) return;
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        const { target } = mutation;
+  const declaredAnimations = {
+    fadeIn: {
+      duration: new Duration({ ms: 1000 }),
+      easing: "ease-in",
+      keyframes: [{ opacity: 0 }, { opacity: 1 }],
+    },
+  } satisfies Record<string, AnimationConfig>;
 
-        // only process KaTeX descendants
-        if (!(target instanceof HTMLElement)) continue;
-        if (
-          !(
-            target.classList.contains("katex") ||
-            target.classList.contains("katex-display")
-          )
-        ) {
-          continue;
-        }
+  return (
+    <KaTeXProvider
+      macros={{
+        ...macros,
+        "\\animate": raw`\htmlData{lv-ktx-animate=#1}{#2}`,
+        "\\fadeIn": raw`\animate{fadeIn;#1}{#2}`,
+      }}
+    >
+      <TargetDescendants
+        transforms={[
+          {
+            custom: (node: HTMLSpanElement, { playback, script }) => {
+              const data = node.dataset.lvKtxAnimate;
+              if (!data) return;
 
-        const anims = Array.from(
-          target.querySelectorAll("*[data-anim]"),
-        ) as HTMLSpanElement[];
-        for (const node of anims) {
-          const [, marker] = node.dataset.anim!.split(";");
-          fadeIn(
-            playback,
-            script.markers.get(marker).start.inMilliseconds(),
-          )(node);
-          // if (name in animations) {
-          //   animations[name](marker)(node);
-          // }
-        }
-      }
-    });
+              const args = data.split(";");
+              if (args.length < 2) {
+                console.error("Invalid animation config:", data);
+                return;
+              }
 
-    observer.observe(ref.current, { childList: true, subtree: true });
+              const [animationName, rawAt, ...rawOptions] = args;
+              const options: Record<string, unknown> = {};
 
-    return () => observer.disconnect();
-  }, [playback, script]);
+              let at: Duration;
+              if (rawAt.match(timeRegexp)) {
+                at = parseTime$(rawAt);
+              } else if (script) {
+                at = script.markers.get(rawAt).start;
+              } else {
+                console.error("Invalid animation start time:", rawAt);
+                return;
+              }
 
-  return <div ref={ref}>{children}</div>;
+              const animation = (
+                declaredAnimations as Record<string, AnimationConfig>
+              )[animationName];
+              if (!animation) {
+                console.error("Unknown animation:", animationName);
+                return;
+              }
+
+              const config = {
+                delay: at
+                  .plus(animation.delay ?? Duration.zero)
+                  .inMilliseconds(),
+                duration: Duration.from(animation.duration).inMilliseconds(),
+                easing: animation.easing,
+                fill: animation.fill ?? "both",
+                keyframes: animation.keyframes,
+              };
+
+              const subOrUnsub = playback.newAnimation(
+                animation.keyframes,
+                config,
+              );
+
+              subOrUnsub(node);
+
+              return () => {
+                subOrUnsub(null);
+              };
+            },
+            selector: "*[data-lv-ktx-animate]",
+          },
+        ]}
+      >
+        {children}
+      </TargetDescendants>
+    </KaTeXProvider>
+  );
 }

@@ -1,6 +1,6 @@
-import { animate, bezier, easings } from "@liqvid/animation";
+import { animate$, bezier, easings } from "@liqvid/animation";
 import { KaTeXProvider, KTX } from "@liqvid/katex";
-import { Script } from "liqvid";
+import { Duration, Script, UniversalHelper } from "liqvid";
 import { DoubleSide, Quaternion, Vector3 } from "three";
 
 import { FadeIn } from "@/components/animations/html.tsx";
@@ -68,6 +68,8 @@ const script = new Script([
 ]);
 
 type M = typeof script extends Script<infer M> ? M : never;
+
+const $u = UniversalHelper<M>;
 
 export default function ThreeD() {
   return (
@@ -145,7 +147,12 @@ export default function ThreeD() {
                 quaternion={q}
               >
                 <planeGeometry args={[vab.length() * 2, vab.length() * 1]} />
-                <meshToonMaterial color={green500} side={DoubleSide} />
+                <meshPhysicalMaterial
+                  color={green500}
+                  metalness={0.3}
+                  roughness={0}
+                  side={DoubleSide}
+                />
               </mesh>
             </FadeInOut3>
             <FadeIn3<M> endValue={0.5} start="plane2">
@@ -161,28 +168,36 @@ export default function ThreeD() {
           </Canvas>
         </section>
         <KatexAnimations>
-          <KTX
-            className="absolute right-8 bottom-20 rounded-md bg-gray-200/50 p-2 text-xl shadow-lg dark:bg-stone-800/50"
-            data-from-first="dab"
-            displayMode
-            id="pyth3"
-          >{raw`
-        \begin{aligned}
-          \fadeIn{dab}{d(\pA, \pB)^2} &\fadeIn{dab}{=
-          d(\pA, \pC)^2 + d(\pC, \pB)^2}\\
-          &\fadeIn{dz}{= d(\pA, \pC)^2 + (z_2-z_1)^2}\\
-          \fadeIn{dac}{d(\pA, \pC)^2} &\fadeIn{dac}{= (x_2 - x_1)^2 + (y_2 - y_1)^2}\\
-          \fadeIn{qed}{d(\pA, \pB)^2} &\fadeIn{qed}{= (x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}
-        \end{aligned}
-      `}</KTX>
+          <$u from="dab">
+            <KTX
+              className="absolute right-8 bottom-20 rounded-md bg-gray-200/50 p-2 text-xl shadow-lg dark:bg-stone-800/50"
+              data-from-first="dab"
+              displayMode
+              macros={{
+                "\\animate": raw`\htmlData{lv-ktx-animate=#1}{#2}`,
+                "\\fadeIn": raw`\animate{fadeIn;#1}{#2}`,
+                "\\pA": raw`\htmlClass{text-red-600}A`,
+                "\\pB": raw`\htmlClass{text-blue-600}B`,
+                "\\pC": raw`\htmlClass{text-pink-600}C`,
+              }}
+            >{raw`
+            \begin{aligned}
+              \fadeIn{dab;delay:10ms;easing:ease-in-out;duration:300ms}{d(\pA, \pB)^2} &\fadeIn{dab}{=
+              d(\pA, \pC)^2 + d(\pC, \pB)^2}\\
+              &\fadeIn{dz}{= d(\pA, \pC)^2 + (z_2-z_1)^2}\\
+              \fadeIn{dac}{d(\pA, \pC)^2} &\fadeIn{dac}{= (x_2 - x_1)^2 + (y_2 - y_1)^2}\\
+              \fadeIn{qed}{d(\pA, \pB)^2} &\fadeIn{qed}{= (x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}
+            \end{aligned}
+          `}</KTX>
+          </$u>
         </KatexAnimations>
       </LiqvidPlayer>
     </KaTeXProvider>
   );
 }
 
-const animateLine = animate({
-  duration: 700,
+const animateLine = animate$({
+  duration: { ms: 700 },
   easing: bezier(...easings.easeInCubic),
-  startTime: 0,
+  startTime: Duration.zero,
 });
