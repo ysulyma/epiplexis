@@ -1,0 +1,19 @@
+.track {
+  fill: none;
+  stroke: var(--gray12);
+}
+
+.angleControl {
+  height: 18rem;
+  vertical-align: middle;
+
+  /* focus state */
+  &:active,
+  &:focus {
+    outline: none;
+
+    > .track {
+      filter: drop-shadow(0 0 2px AccentColor) drop-shadow(0 0 2px AccentColor);
+    }
+  }
+}
