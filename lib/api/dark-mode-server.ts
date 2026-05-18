@@ -2,7 +2,7 @@ export const darkClass = "dark";
 
 /** Script to inject into app mode */
 export const darkModeScript = `(${() => {
-  const isDark = new URLSearchParams(location.search).has("dark");
+  const isDark = new URLSearchParams(location.search).get("theme") === "dark";
 
   // transparency
   document
