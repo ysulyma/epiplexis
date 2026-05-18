@@ -28,8 +28,16 @@ let nextConfig: NextConfig = {
   reactCompiler: true,
 
   turbopack: {
-    // enable importing .tex files
     rules: {
+      // allow importing SVG files with SVGR
+      "*.svg": {
+        as: "*.js",
+        condition: {
+          query: /[?&]svgr(?=&|$)/,
+        },
+        loaders: ["@svgr/webpack"],
+      },
+      // enable importing .tex files
       "*.tex": {
         as: "*.js",
         loaders: ["raw-loader"],

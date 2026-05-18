@@ -102,7 +102,7 @@
         "noUnknownAtRules": {
           "level": "error",
           "options": {
-            "ignore": ["tailwind"]
+            "ignore": ["tailwind", "utility"]
           }
         }
       }
