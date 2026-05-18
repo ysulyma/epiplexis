@@ -1,11 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer reset, theme, base, components, utilities;
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@import "tailwindcss/theme.css" layer(theme);
+/* preflight breaks too many things in my experience */
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@layer reset {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    font-family: sans-serif;
+  }
 }
 
 input {
@@ -22,4 +31,31 @@ body.dragging .lv-canvas,
 body.dragging .draggable,
 .dragging {
   cursor: grabbing;
+}
+
+/* rounded table corners */
+@utility table-rounded-* {
+  > thead {
+    > tr:first-child {
+      border-top-radius: --value(--radius-*);
+
+      > :first-child {
+        border-top-left-radius: --value(--radius-*);
+      }
+
+      > :last-child {
+        border-top-right-radius: --value(--radius-*);
+      }
+    }
+  }
+
+  > tbody > tr:last-child {
+    > :first-child {
+      border-bottom-left-radius: --value(--radius-*);
+    }
+
+    > :last-child {
+      border-bottom-right-radius: --value(--radius-*);
+    }
+  }
 }

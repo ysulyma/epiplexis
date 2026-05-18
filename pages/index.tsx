@@ -2,7 +2,7 @@ import { promises as fsp } from "node:fs";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { ExternalLink } from "@/components/ExternalLink.tsx";
 import { cn } from "@/lib/utils.ts";
@@ -46,44 +46,46 @@ export default function Page({
         {JSON.stringify(dir, null, 2)}
       </pre> */}
       <h1 className="my-2 text-3xl">Content</h1>
-      <div aria-label="Interactives" className="font-mono" role="tree">
+      {/** biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: lists are ok */}
+      <ul aria-label="Interactives" className="font-mono" role="tree">
         {dir.children.map((item) =>
           typeof item === "string" ? null : <Tree dir={item} key={item.name} />,
         )}
-      </div>
+      </ul>
     </main>
   );
 }
 
 function Tree({ dir }: { dir: Dir }) {
   const [expanded, setExpanded] = useState(true);
+  const id = useId();
 
   return (
-    // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
-    <div
-      aria-expanded={expanded}
-      className="group"
-      role="treeitem"
-      tabIndex={0}
-    >
+    <div className="group" role="none">
       <span
+        aria-expanded={expanded}
+        aria-owns={id}
         className="cursor-pointer"
         onClick={() => setExpanded((prev) => !prev)}
+        role="treeitem"
+        tabIndex={0}
       >
         {formatPagesPath(dir.name) + "/"}
       </span>
       {dir.children.length > 0 && (
-        <ol className={cn("ml-8", expanded || "hidden")}>
+        <ul className={cn("ml-8 list-none", expanded || "hidden")} id={id}>
           {dir.children.map((item) => {
             if (typeof item === "string") {
               const isAppDir = item.startsWith("./app");
               if (isAppDir && !item.endsWith("page.tsx")) return null;
 
               return (
-                <li key={item} role="treeitem" tabIndex={0}>
+                <li key={item} role="none">
                   <Link
                     className="text-blue-600"
                     href={isAppDir ? appHref(item) : pagesHref(item)}
+                    role="treeitem"
+                    tabIndex={0}
                   >
                     {isAppDir ? formatAppPath(item) : formatPagesPath(item)}
                   </Link>
@@ -93,7 +95,7 @@ function Tree({ dir }: { dir: Dir }) {
               return <Tree dir={item} key={item.name} />;
             }
           })}
-        </ol>
+        </ul>
       )}
     </div>
   );

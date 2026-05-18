@@ -19,7 +19,7 @@ const max = 100;
 const maxRowsPerTable = 9;
 
 const Th = (props: React.HTMLProps<HTMLTableCellElement>) => (
-  <th className="px-4 py-2" {...props} />
+  <th className="bg-gray-100 px-4 py-2 dark:bg-stone-700" {...props} />
 );
 
 const Td = (props: React.HTMLProps<HTMLTableCellElement>) => (
@@ -53,7 +53,7 @@ export default function Table() {
         Choose a number between {min} and {max} to see its representation in
         different bases.
       </p>
-      <fieldset className="mx-auto my-4 flex w-fit">
+      <fieldset className="mx-auto my-4 flex w-fit border-none">
         <input
           max={max}
           min={min}
@@ -73,11 +73,11 @@ export default function Table() {
       <div className="mx-auto my-4 flex w-full justify-between gap-8">
         {tables.map((table, index) => (
           <table
-            className="border border-gray-200 border-solid dark:border-gray-800"
+            className="table-rounded-sm border border-gray-200 border-solid dark:border-gray-800"
             // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
             key={index}
           >
-            <thead className="bg-gray-100 dark:bg-stone-700">
+            <thead>
               <tr>
                 <Th>Base</Th>
                 <Th>Representation</Th>
